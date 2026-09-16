@@ -1,0 +1,141 @@
+/*
+quotes.css
+Coltrane Margosian. coltrane@bu.edu. 2026-09-12
+This is the stylesheet for the Quotes page, featuring Sun Ra.
+All stylization is present in this document.
+*/
+
+body {
+    background-color: #384146;
+    background-image: url("background.jpg");
+    background-repeat: no-repeat;
+    background-position-x: 50%;
+    background-position-y: 90%;
+    background-size: cover;
+    background-attachment: fixed;
+    color: #f2e4bd;
+    font-family: 'Times New Roman', serif;
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 20px auto;
+}
+
+main {
+    color: #f2e4bd;
+    background-color: #384146;
+    font-family: 'Times New Roman', serif;
+    margin: 0px;
+    text-align: left;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+main p {
+    font-size: 1.5em;
+    margin: 0px;
+}
+
+h1 {
+    font-size: 3em;
+    border-radius: 10px;
+}
+
+h1,h2,h3,h4,h5{
+    font-weight: normal;
+    color: #f2e4bd;
+    background-color: #384146;
+    font-family: 'Brush Script MT', 'Times New Roman', serif;
+    margin: 0;
+    text-align: center;
+}
+
+a, a:visited {
+    color: #f2e4bd;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #d2c49d;
+    text-decoration: underline;
+    /* font-weight: bold; */
+}
+
+header {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background:aliceblue;
+    position: fixed;
+    top: 0px;
+    z-index: 999;
+    /* padding-right: 50px auto; */
+}
+
+footer {
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    font-family: 'Times New Roman', serif;
+    text-align: center;
+    max-width: 960px;
+    margin: auto;
+    padding: auto;
+}
+
+nav {
+    justify-self: end;
+    background: none;
+    color: darkblue;
+    /* border: 1px solid; */
+}
+
+nav ol {
+    margin: 0;
+}
+
+nav li {
+    display: inline-block;
+    margin: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #384146;
+    border-radius: 8px 8px 0px 0px;
+}
+
+/* Used in the */
+#portrait {
+    display: block;
+    margin: auto;
+    border-style: double;
+    border-width: 10px;
+    border-color: #f2e4bd;
+    max-width: 80vw;
+    max-height: 60vh;
+}
+
+#aboutportrait {
+    display: block;
+    margin: auto;
+    border-style: double;
+    border-width: 10px;
+    border-color: #f2e4bd;
+    width: min(80vw, 30vh);
+}
+
+.allimg {
+    display: block;
+    margin: auto;
+    border-style: double;
+    border-width: 10px;
+    border-color: #f2e4bd;
+    max-width: 80vw;
+    max-height: 60vh;
+}
+
+#wisdom {
+    text-align: center;
+    font-size: 2em;
+    font-family: 'Times New Roman', serif;
+    background-color: #384146;
+    border-radius: 10px;   
+}

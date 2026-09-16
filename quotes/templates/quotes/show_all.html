@@ -1,0 +1,32 @@
+<!--
+show_all.html
+Coltrane Margosian. coltrane@bu.edu. 2026-09-12
+This is the template for the Quotes "All Quotes" section, which contains a
+script which lists every quote and image of Sun Ra on the website.
+-->
+
+{% extends 'quotes/base.html' %}
+{% load static %}
+
+    {% block content %}
+    <h1>All Quotes & Images</h1>
+    <br>
+    <main>
+
+        <!-- For loop which iterates through every item of quote_list and
+            displays it in its own paragraph. -->
+        {% for i in quote_list %}
+            <p>"{{i}}"</p>
+            <br>
+        {% endfor %}
+
+        <!-- For loop which iterates through every item of image_list and
+            displays its corresponding image. -->
+        {% for i in image_list %}
+            <img class="allimg" src="{% static i %}">
+            <br>
+        {% endfor %}
+    </main>
+    
+    
+    {% endblock %}~

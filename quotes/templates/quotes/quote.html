@@ -1,0 +1,22 @@
+<!--
+quote.html
+Coltrane Margosian. coltrane@bu.edu. 2026-09-12
+This is the template for the "Quotes" front page. It displays a random quote
+and image of Sun Ra.
+-->
+
+{% extends 'quotes/base.html' %}
+{% load static %}
+
+    {% block content %}
+    <h1>The Wisdom of Sun Ra</h1>
+    <br>
+    
+    <!-- Displays a random image of Sun Ra. -->
+    <img id="portrait" src="{% static rand_image %}">
+
+    <!-- Displays a random quote of Sun Ra.-->
+    <p id="wisdom">"{{rand_quote}}"</p>
+    
+        
+    {% endblock %}~

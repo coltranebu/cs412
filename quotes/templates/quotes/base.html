@@ -1,0 +1,39 @@
+<!--
+base.html
+Coltrane Margosian. coltrane@bu.edu. 2026-09-12
+This is the template for the base of the Quotes website. Every page uses this
+template for common features including the title, navigation, footer, and
+stylesheet.
+-->
+
+{% load static %}
+<html>
+    <head>
+        <title>The Wisdom of Sun Ra</title>
+        <link rel="stylesheet" href="{% static 'quotes/quotes.css' %}">
+    </head>
+    <body>
+
+        <!-- Navigation -->
+        <nav>
+            <ol>
+                <li><a href="{% url 'quote' %}">Home</a></li>
+                <li><a href="{% url 'show_all' %}">All Quotes</a></li>
+                <li><a href="{% url 'about' %}">About</a></li>
+            </ol>
+        </nav>
+
+        {% block content %}
+        {% endblock %}
+
+
+        <!-- Footer -->
+        <br>
+        <footer>
+            <p>
+                Created by Coltrane Margosian.
+                <a href="mailto:coltrane@bu.edu">coltrane@bu.edu</a>
+            </p>
+        </footer>
+    </body>
+</html>

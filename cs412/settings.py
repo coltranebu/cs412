@@ -1,3 +1,7 @@
+# settings.py
+# Coltrane Margosian. coltrane@bu.edu. 2026-09-08
+# Further information below.
+
 """
 Django settings for cs412 project.
 
@@ -42,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "hw", # NEW
+    "quotes", # NEW, ASSIGN 1
 ]
 
 MIDDLEWARE = [
@@ -62,6 +67,7 @@ TEMPLATES = [
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
+            # Provides an error message for invalid context variables.
             "string_if_invalid": "WARNING: {{%s}} not a valid context variable.",
             'context_processors': [
                 'django.template.context_processors.request',

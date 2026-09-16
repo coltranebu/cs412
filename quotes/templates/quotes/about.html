@@ -1,0 +1,27 @@
+<!--
+about.html
+Coltrane Margosian. coltrane@bu.edu. 2026-09-12
+This is the template for the Quotes "About" page, detailing some information
+about Sun Ra and the website.
+-->
+
+{% extends 'quotes/base.html' %}
+{% load static %}
+
+    {% block content %}
+    <h1>About</h1>
+    <br>
+    <main>
+        <p>
+            Sun Ra was a jazz musician who began to play and compose in the 1930s,
+            continuing until his death in 1993. He and his Arkestra embraced outer
+            space in their experimental jazz which spanned over a hundred albums.
+            This website compiles some of his quotations and images.
+        </p>
+     </main>
+    <br>
+    <img id="aboutportrait" src="{% static 'quotes/sunra/sunra1.jpg' %}">
+   
+
+    
+    {% endblock %}~

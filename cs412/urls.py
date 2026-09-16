@@ -1,3 +1,7 @@
+# urls.py
+# Coltrane Margosian. coltrane@bu.edu. 2026-09-08
+# Further information below.
+
 """
 URL configuration for cs412 project.
 
@@ -22,4 +26,5 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("hw/", include("hw.urls")),
+    path("quotes/", include("quotes.urls")),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
