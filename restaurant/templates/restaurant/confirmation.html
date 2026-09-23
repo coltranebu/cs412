@@ -1,0 +1,78 @@
+<!--
+restaurant/templates/restaurant/confirmation.html
+Coltrane Margosian. coltrane@bu.edu. 2026-09-23
+This is an order confirmation page displayed to the user after they submit an
+order query.
+-->
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <h2>Order Confirmation</h2>
+    <br>
+
+    <main>
+
+        <!-- Display error if no items purchased -->
+        {% if no_order == True %}
+
+        <p>At least one item must be purchased to create an order.</p>
+        <br>
+        <a href="{% url 'order' %}">Back</a>
+
+        <!-- Display error if contact information not given -->
+        {% elif no_info == True %}
+
+        <p>Your name, phone number, and email address must be given to 
+            create an order.</p>
+        <br>
+        <a href="{% url 'order' %}">Back</a>
+
+        <!-- Success case (items selected and contact info given) -->
+        {% else %}
+
+        <!-- DEBUG PAGE SHOWING VARIABLES. KEEP COMMENTED.
+        <p>Order: {{order}}</p>
+        <p>Cost: {{cost}}</p>
+        <p>Special Instructions: {{special_instructions}}</p>
+        <p>Name: {{customer_name}}</p>
+        <p>Phone Number: {{phone_number}}</p>
+        <p>Email Address: {{email_address}}</p>
+        <p>no_order: {{no_order}}</p>
+        <p>no_info: {{no_info}}</p>
+        <p>time_ready: {{time_ready}}</p>
+        -->
+
+        <h3><b>Thank you for your order!</b></h3>
+        <br>
+
+        <!-- Dynamically display time by which beverages will be ready -->
+        <p>Your beverages will be ready by: {{time_ready}}</p>
+
+        <br>
+        <h3>You have ordered:</h3>
+        <ul>
+            <!-- For loop which iterates through every item of order and
+                displays it in its own bullet in the list -->
+            {% for i in order %}
+                <li>{{i}}</li>
+            {% endfor %}
+        </ul>
+        <br>
+
+        <!-- Dynamically display price -->
+        <p>Your total is: <b>${{cost}}0</b></p>
+        <br><hr><br>
+
+        <!-- Display customer information -->
+        <h3>Customer Information</h3>
+        <p>Name: {{customer_name}}</p>
+        <p>Phone Number: {{phone_number}}</p>
+        <p>Email Address: {{email_address}}</p>
+
+        {% endif %}
+
+    </main>
+
+{% endblock %}

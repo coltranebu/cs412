@@ -1,0 +1,100 @@
+/*
+static/restaurant/style.css
+Coltrane Margosian. coltrane@bu.edu. 2026-09-20
+This is the stylesheet for the Bay State Blenheim Dispensary page.
+All stylization is present in this document.
+*/
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #2a1b00;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+main {
+    width: 80%;
+    margin: auto;
+}
+
+h1,h2,h4,h5{
+    font-family: "Manufacturing Consent", Times, serif;
+    font-weight: 400;
+    font-style: normal;
+    background:#191000;
+    text-align: center;
+}
+
+h1 {
+    font-size: 4em;
+}
+
+a, a:visited {
+    color: white;
+    text-decoration: none;
+}
+
+a:hover {
+    color: lightgray;
+    text-decoration: none;
+}
+
+body {
+    max-width: 960px;
+    margin: 20px auto;
+    padding: 20px auto;
+}
+
+header {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background:aliceblue;
+    position: fixed;
+    top: 0px;
+    z-index: 999;
+}
+
+#storefront-img {
+    display: block;
+    margin: auto;
+    border-style: solid;
+    border-width: 2px;
+    border-color: #ffffff;
+    max-width: 80vw;
+    max-height: 60vh;
+
+}
+
+#hours-display {
+    display: table;
+    margin: 0 auto;
+}
+
+.center-align {
+    text-align: center;
+}
+
+/* Nav stylization interpolated from stylesheet given in "hw" example */
+nav {
+    justify-self: end;
+    background: none;
+    color: #191000;
+}
+
+nav ol {
+    margin: 0;
+}
+
+nav li {
+    display: inline-block;
+    margin: 0px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #191000;
+    border-radius: 8px 8px 0px 0px;
+}

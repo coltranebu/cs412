@@ -1,0 +1,35 @@
+<!--
+restaurant/templates/restaurant/main.html
+Coltrane Margosian. coltrane@bu.edu. 2026-09-17
+This page is the simple homepage for the fictitous Bay State Blenheim
+Dispensary, displaying basic information and a picture.
+-->
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <h2>Homepage</h2>
+    <br>
+
+    <!-- Shoutout to Photoshop for making edits like this possible. -->
+    <!-- Soap box: image editing is way more authentic than Gen. AI! -->
+    <img id="storefront-img" src="{% static 'restaurant/bsbdstorefront.jpg' %}"
+    alt="Bay State Blenheim Dispensary Storefront">
+    <br>
+    <p class="center-align"> Providing Boston University with Blenheim Ginger
+        Ale since 2026.</p>
+    <br>
+
+    <!-- Address -->
+    <p class="center-align">177 Bay State Rd. Boston, MA 02215</p>
+
+    <br>
+
+    <!-- Hours -->
+    <ul id="hours-display">
+        <li>Monday-Saturday: 10 a.m. - 8 p.m.</li>
+        <li>Sunday: Closed</li>
+    </ul>
+
+{% endblock %}

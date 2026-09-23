@@ -82,11 +82,11 @@ footer {
     padding: auto;
 }
 
+/* Nav stylization interpolated from stylesheet given in "hw" example */
 nav {
     justify-self: end;
     background: none;
     color: darkblue;
-    /* border: 1px solid; */
 }
 
 nav ol {
@@ -102,7 +102,7 @@ nav li {
     border-radius: 8px 8px 0px 0px;
 }
 
-/* Used in the */
+/* Used in the random image on the front page */
 #portrait {
     display: block;
     margin: auto;
@@ -113,6 +113,7 @@ nav li {
     max-height: 60vh;
 }
 
+/* Used in the set image on the about page */
 #aboutportrait {
     display: block;
     margin: auto;
@@ -122,6 +123,7 @@ nav li {
     width: min(80vw, 30vh);
 }
 
+/* Used in the images on the "All Quotes" page */
 .allimg {
     display: block;
     margin: auto;
@@ -132,6 +134,7 @@ nav li {
     max-height: 60vh;
 }
 
+/* Used in the random quote on the front page */
 #wisdom {
     text-align: center;
     font-size: 2em;

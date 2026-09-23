@@ -1,0 +1,136 @@
+<!--
+restaurant/templates/restaurant/order.html
+Coltrane Margosian. coltrane@bu.edu. 2026-09-20
+This is the page on which the user "orders" a number of beverages. The blueprint
+for the page is detailed in a comment below.
+-->
+{% extends 'restaurant/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <h2>Order</h2>
+    <br>
+    <!--
+    For each Blenheim flavor, select quantity
+
+    FLAVOR:
+    [] Old #3 Hot
+    [] #5 Not as Hot
+    [] #9 Diet
+
+    QTY:
+    () 0        $0.00
+    () 1        $3.00
+    () 6        $12.00
+    () 12       $22.00
+    () 24       $41.00
+
+    User may purchase one of whatever the daily special is, generated randomly.
+    DAILY SPECIAL ($2):
+    - Blenheim Mineral Springs Water
+    - God's Acre Healing Springs Water
+    - Coker Spring Water
+
+    SPECIAL INSTRUCTIONS: [>__________]
+
+    NAME: [>__________]
+    PHONE NUMBER: [>__________]
+    EMAIL: [>__________]
+
+    [SUBMIT]
+    -->
+
+    <main>
+        <!-- The form makes up the entire page -->
+        <form action="{% url 'confirmation' %}" method="POST">
+            <!-- Necessary for security-->
+            {% csrf_token %}
+
+            <!-- Hot Blenheim purchase checkbox & quantity radio -->
+            <input type="checkbox" id="hot_purchase" name="hot_purchase" 
+                value="hot_purchase">
+            <label for="hot_purchase">Old #3 Hot Ginger Ale</label><br>
+            <br>
+            <p>Quantity:</p>
+            <input type="radio" id="hot_one" name="hot_qty" value="1" checked>
+            <label for="hot_one">1 &mdash; ($3.00)</label><br>
+            <input type="radio" id="hot_six" name="hot_qty" value="6">
+            <label for="hot_six">6 &mdash; ($12.00)</label><br>
+            <input type="radio" id="hot_twelve" name="hot_qty" value="12">
+            <label for="hot_twelve">12 &mdash; ($22.00)</label><br>
+            <input type="radio" id="hot_twentyfour" name="hot_qty" value="24">
+            <label for="hot_twentyfour">24 &mdash; ($41.00)</label><br>
+
+            <br><hr><br>
+
+            <!-- Mild Blenheim purchase checkbox & quantity radio -->
+            <input type="checkbox" id="mild_purchase" name="mild_purchase"
+                value="mild_purchase">
+            <label for="mild_purchase">#5 Not As Hot Ginger Ale</label><br>
+            <br>
+            <p>Quantity:</p>
+            <input type="radio" id="mild_one" name="mild_qty" value="1" checked>
+            <label for="mild_one">1 &mdash; ($3.00)</label><br>
+            <input type="radio" id="mild_six" name="mild_qty" value="6">
+            <label for="mild_six">6 &mdash; ($12.00)</label><br>
+            <input type="radio" id="mild_twelve" name="mild_qty" value="12">
+            <label for="mild_twelve">12 &mdash; ($22.00)</label><br>
+            <input type="radio" id="mild_twentyfour" name="mild_qty" value="24">
+            <label for="mild_twentyfour">24 &mdash; ($41.00)</label><br>
+
+            <br><hr><br>
+
+            <!-- Diet Blenheim purchase checkbox & quantity radio -->
+            <input type="checkbox" id="diet_purchase" name="diet_purchase"
+                value="diet_purchase">
+            <label for="diet_purchase">#9 Diet Ginger Ale</label><br>
+            <br>
+            <p>Quantity:</p>
+            <input type="radio" id="diet_one" name="diet_qty" value="1" checked>
+            <label for="diet_one">1 &mdash; ($3.00)</label><br>
+            <input type="radio" id="diet_six" name="diet_qty" value="6">
+            <label for="diet_six">6 &mdash; ($12.00)</label><br>
+            <input type="radio" id="diet_twelve" name="diet_qty" value="12">
+            <label for="diet_twelve">12 &mdash; ($22.00)</label><br>
+            <input type="radio" id="diet_twentyfour" name="diet_qty" value="24">
+            <label for="diet_twentyfour">24 &mdash; ($41.00)</label><br>
+
+            <br><hr><br>
+
+            <!-- Daily Special purchase checkbox -->
+            <p>Daily Special:</p>
+
+            <!-- If checked, return whatever the daily special is -->
+            <input type="checkbox" id="special_purchase" name="special_purchase"
+                value="{{daily_special}}">
+
+            <!-- Dynamically display daily special -->
+            <label for="special_purchase">{{daily_special}} ($2.00)</label><br>
+
+            <br><hr><br>
+
+            <!-- Special instructions large input box -->
+            <p>Special Instructions:</p>
+            <textarea name="special_instructions" rows="3" cols="60"></textarea>
+                <br>
+
+            <br><hr><br>
+
+            <!-- Name, phone #, & email small input boxes-->
+            <p>Name:</p>
+            <input type="text" name="customer_name"><br><br>
+
+            <p>Phone Number:</p>
+            <input type="text" name="phone_number"><br><br>
+
+            <p>Email Address:</p>
+            <input type="text" name="email_address"><br><br>
+
+            <!-- Submit button -->
+            <input id="submit_button" type="submit">
+
+        </form>
+    </main>
+
+{% endblock %}
