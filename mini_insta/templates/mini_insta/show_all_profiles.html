@@ -9,7 +9,7 @@
                     <h2>{{profile.display_name}}</h2>
                     <h3>{{profile.username}}</h3>
                 </div>
-                <a href=""><img src="{{profile.profile_image_url}}"></a>
+                <a href="{% url 'show_profile' profile.pk %}"><img src="{{profile.profile_image_url}}"></a>
             </div>
             <hr>
             {% endfor %}

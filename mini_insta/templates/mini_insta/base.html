@@ -2,7 +2,7 @@
 <html>
     <head>
         <title>Mini Insta</title>
-        <link rel="stylesheet" href="{% static './mini-insta/style.css' %}">
+        <link rel="stylesheet" href="{% static 'mini_insta/style.css' %}">
     </head>
     <body>
         <nav>
@@ -13,7 +13,8 @@
         {% endblock %}
 
         <footer>
-            Created by Coltane Margosian. coltrane@bu.edu
+            <a href="{% url 'show_all_profiles' %}"><p>Show all profiles</p></a>
+            <p>Created by Coltane Margosian. coltrane@bu.edu.</p>
         </footer>
     </body>
 </html>
