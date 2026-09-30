@@ -1,15 +1,41 @@
+<!--
+mini_insta/templates/mini_insta/show_profile.html
+Coltrane Margosian. coltrane@bu.edu. 2026-09-30
+This is the "Show Profile" page, which displays all of the information relevant
+to a user's profile.
+-->
 {% extends 'mini_insta/base.html' %}
 
     {% block content %}
     
     <main>
-        <h2>{{profile.display_name}}</h2>
-        <h3>{{profile.username}}</h3>
-        <img src="{{profile.profile_image_url}}">
-        <h4>{{profile.join_date}}</h4>
-        <p>{{profile.bio_text|linebreaksbr}}</p>
-        <p>Followers: 0</p>
-        <p>Following: 0</p>
+
+        <!-- Header, with profile picture, name, statistics, etc. -->
+        <div class="profile-header">
+            
+            <!-- Profile picture on left -->
+            <div class="profile-header-image">
+                <img src="{{profile.profile_image_url}}">
+            </div>
+
+            <!-- Biographical data on right -->
+            <div class="profile-header-right">
+                <h2>{{profile.display_name}}</h2>
+                <h3>@{{profile.username}}</h3>
+                <br>
+                <h6>Joined: {{profile.join_date}}</h6>
+
+                <!-- Temporary followers/ing information -->
+                <h6>Followers: 0</h6>
+                <h6>Following: 0</h6>
+            </div>
+        </div>
+
+        <!-- Profile bio -->
+        <div class="profile-bio">
+            <p>{{profile.bio_text|linebreaksbr}}</p>
+        </div>
+
     </main>
         
     {% endblock %}

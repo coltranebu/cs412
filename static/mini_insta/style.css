@@ -1,4 +1,113 @@
+/*
+style.css
+Coltrane Margosian. coltrane@bu.edu. 2026-09-30
+This is the stylesheet for the Mini Insta website.
+All stylization is present in this document.
+*/
+
 * {
     margin: 0;
     box-sizing: border-box;
+}
+
+header {
+    background-color: #5c46f0;
+
+}
+
+header h1 {
+    padding: 5px 10px;
+    font-family: Arial, sans-serif;
+    font-style: italic;
+    color: white;
+}
+
+nav ul {
+    list-style: none;
+    padding-left: 10px;
+    padding-bottom: 10px;
+}
+
+nav ul li {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+nav a {
+    color: white;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 2%;
+}
+
+.grid-item {
+    margin: 2%;
+    border-style: solid;
+    border-radius: 5% 5% 0 0;
+    background-color: #b4c2fa;
+}
+
+.grid-item img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+}
+
+.grid-item span {
+    display: block;
+    font-family: Arial, sans-serif;
+    color: black;
+    text-align: center;
+    font-size: 2vw;
+}
+
+footer {
+    margin-top: 1em;
+    font-family: Arial, sans-serif;
+    color: black;
+    text-align: center;
+}
+
+main {
+    width: 90%;
+    margin: auto;
+}
+
+.profile-header {
+    display: flex;
+    height: 30vh;
+    margin-top: 5vh;
+}
+
+.profile-header-image {
+    aspect-ratio: 1 / 1;
+    margin: 1%;
+}
+
+.profile-header-image img {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-style: solid;
+    border-radius: 5%;
+}
+
+.profile-header-right {
+    margin-top: auto;
+    margin-bottom: auto;
+    padding: 1%;
+    font-family: Arial, sans-serif;
+    color: black;
+    font-size: 3.5vh;
+
+}
+
+.profile-bio {
+    margin: 1vh 1vh 0 1vh;
+    font-family: Arial, sans-serif;
+    color: black;
+    font-size: 3vh;
 }
