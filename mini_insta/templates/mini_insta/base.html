@@ -1,0 +1,19 @@
+{% load static %}
+<html>
+    <head>
+        <title>Mini Insta</title>
+        <link rel="stylesheet" href="{% static './mini-insta/style.css' %}">
+    </head>
+    <body>
+        <nav>
+            <li><a href="{% url 'show_all_profiles' %}">Show All Profiles</a></li>
+        </nav>
+
+        {% block content %}
+        {% endblock %}
+
+        <footer>
+            Created by Coltane Margosian. coltrane@bu.edu
+        </footer>
+    </body>
+</html>
