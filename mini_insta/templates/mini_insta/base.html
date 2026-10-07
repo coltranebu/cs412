@@ -33,6 +33,12 @@ and stylesheet.
             <a href="{% url 'show_all_profiles' %}">
                 <p>Show all profiles</p>
             </a>
+            <!-- Only show "create post" if on profile -->
+            {% if profile %}
+                <a href="{% url 'create_post' profile.pk %}">
+                    <p>Create post</p>
+                </a>
+            {% endif %}
         </footer>
     </body>
 </html>

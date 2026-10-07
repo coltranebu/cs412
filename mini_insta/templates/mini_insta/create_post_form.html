@@ -1,0 +1,40 @@
+<!--
+mini_insta/templates/mini_insta/create_post_form.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-07
+This page allows the user to create a post for a profile.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+        <a href="{% url 'show_profile' profile.pk %}">
+            <p>Back</p>
+        </a>
+        <br>
+        <h1>Create a new post for {{profile.display_name}}</h1>
+
+        <form action="{% url 'create_post' profile.pk %}" method="POST">
+            {% csrf_token %}
+            <table>
+                <tr>
+                    <td>
+                        <p>Caption:</p>
+                        <textarea name="caption" rows="3" cols="60"></textarea><br><br>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Image URL:</p>
+                        <input type="text" name="image_url"><br><br>
+                    </td>
+                </tr>
+            </table>
+
+
+
+            <input type="submit" name="submit" value="Submit">
+        </form>
+    </main>
+        
+    {% endblock %}
