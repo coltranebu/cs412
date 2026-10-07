@@ -5,6 +5,7 @@ This is the "Show Profile" page, which displays all of the information relevant
 to a user's profile.
 -->
 {% extends 'mini_insta/base.html' %}
+{% load static %}
 
     {% block content %}
     
@@ -34,6 +35,26 @@ to a user's profile.
         <!-- Profile bio -->
         <div class="profile-bio">
             <p>{{profile.bio_text|linebreaksbr}}</p>
+        </div>
+
+        <!-- Posts -->
+        <div class = "post-grid">
+            <!-- For loop iterating through every post and displaying it -->
+            {% for post in profile.get_all_posts %}
+                <div class="post-grid-item">
+                    <!-- Display image in the form of a link to post -->
+                    <a href="{% url 'post' post.pk %}">
+                        <!-- If there is an image, show it. Otherwise, use a
+                         placeholder. -->
+                        {% if post.get_all_photos.first.image_url != None %}
+                            <img src="{{post.get_all_photos.first.image_url}}">
+                        {% else %}
+                            <img 
+                            src="{% static 'mini_insta/img/noimage.jpg' %}">
+                        {% endif %}
+                    </a>
+                </div>
+            {% endfor %}
         </div>
 
     </main>

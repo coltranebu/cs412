@@ -1,0 +1,51 @@
+<!--
+mini_insta/templates/mini_insta/show_post.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-06
+This is the "Show Post" page, which displays all the details of any one post.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+
+        <!-- Header, with profile picture, name, statistics, etc. -->
+        <div class="profile-header">
+            
+            <!-- Profile picture on left -->
+            <div class="profile-header-image">
+                <a href="{% url 'show_profile' post.profile.pk %}">
+                    <img src="{{post.profile.profile_image_url}}">
+                </a>
+            </div>
+
+            <!-- Biographical data on right -->
+            <div class="profile-header-right">
+                <h2>{{post.profile.display_name}}</h2>
+                <h3>@{{post.profile.username}}</h3>
+                <br>
+                <h6>Joined: {{post.profile.join_date}}</h6>
+
+                <!-- Temporary followers/ing information -->
+                <h6>Followers: 0</h6>
+                <h6>Following: 0</h6>
+            </div>
+        </div>
+
+        <!-- Post content -->
+        <!-- Timestamp -->
+        <h1>{{post.timestamp}}</h1>
+        <!-- Photos -->
+        <div class="post-photos">
+            <!-- For loop iterating through every photo and displaying it -->
+            {% for photo in post.get_all_photos %}
+                <!-- Display all post images -->
+                <img class="post-photo" src="{{photo.image_url}}">
+            {% endfor %}
+        </div>
+        <!-- Caption -->
+        <br>
+        <p>{{post.caption}}</p>
+    </main>
+        
+    {% endblock %}
