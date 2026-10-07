@@ -40,7 +40,12 @@ This is the "Show Post" page, which displays all the details of any one post.
             <!-- For loop iterating through every photo and displaying it -->
             {% for photo in post.get_all_photos %}
                 <!-- Display all post images -->
-                <img class="post-photo" src="{{photo.image_url}}">
+                <!-- If URL, reference that. Otherwise, use file. -->
+                {% if photo.image_url %}
+                    <img class="post-photo" src="{{photo.image_url}}">
+                {% else %}
+                    <img class="post-photo" src="{{photo.image_file.url}}">
+                {% endif %}
             {% endfor %}
         </div>
         <!-- Caption -->

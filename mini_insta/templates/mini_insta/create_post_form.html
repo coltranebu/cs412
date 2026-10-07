@@ -14,7 +14,7 @@ This page allows the user to create a post for a profile.
         <br>
         <h1>Create a new post for {{profile.display_name}}</h1>
 
-        <form action="{% url 'create_post' profile.pk %}" method="POST">
+        <form action="{% url 'create_post' profile.pk %}" method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <table>
                 <tr>
@@ -25,8 +25,8 @@ This page allows the user to create a post for a profile.
                 </tr>
                 <tr>
                     <td>
-                        <p>Image URL:</p>
-                        <input type="text" name="image_url"><br><br>
+                        <p>Image:</p>
+                        <input type="file" name="image_files" multiple><br><br>
                     </td>
                 </tr>
             </table>

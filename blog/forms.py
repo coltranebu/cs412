@@ -5,7 +5,7 @@ class CreateArticleForm(forms.ModelForm):
 
     class Meta:
         model = Article
-        fields = ['author', 'title', 'text', 'image_url']
+        fields = ['author', 'title', 'text', 'image_file']
 
 class CreateCommentForm(forms.ModelForm):
 

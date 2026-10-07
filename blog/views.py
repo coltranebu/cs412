@@ -29,6 +29,9 @@ class CreateArticleView(CreateView):
     form_class = CreateArticleForm
     template_name = "blog/create_article_form.html"
 
+    def form_valid(self, form):
+        return super().form_valid(form)
+
 class CreateCommentView(CreateView):
     form_class = CreateCommentForm
     template_name = "blog/create_comment_form.html"
@@ -39,7 +42,7 @@ class CreateCommentView(CreateView):
 
     def get_context_data(self):
         context = super().get_context_data()
-        
+
         pk = self.kwargs['pk']
         article = Article.objects.get(pk=pk)
 

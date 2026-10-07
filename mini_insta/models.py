@@ -45,8 +45,24 @@ class Photo(models.Model):
     """"""
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     image_url = models.URLField(blank=True)
+    image_file = models.ImageField(blank=True)
     timestamp = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        """"""
-        return f'Photo on post by {self.post.profile.username} saved on {self.timestamp}'
+        """Return a string representation of a Photo."""
+        # Conditional accomodates for whether there is a URL or file.
+        if self.image_url:
+            return f'Photo on post by {self.post.profile.username} saved on \
+            {self.timestamp} with URL {self.image_url}'
+        else:
+            return f'Photo on post by {self.post.profile.username} saved on \
+            {self.timestamp} with URL {self.image_file}'
+    
+    def get_image_url(self):
+        """Return the URL to a Photo's image."""
+        # If there is a URL, return it. Otherwise, return file.
+        if self.image_url:
+            return self.image_url
+        else:
+            return self.image_file.url
+
