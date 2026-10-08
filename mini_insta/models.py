@@ -17,32 +17,36 @@ class Profile(models.Model):
     join_date = models.DateField(auto_now=True)
 
     def __str__(self):
-        """Return a string displaying the profile's display name and
+        """Return a string displaying a profile's display name and
         username."""
         return f'{self.display_name} (@{self.username})'
 
     def get_all_posts(self):
-        """"""
+        """Return every post associated with a given Profile."""
         posts = Post.objects.filter(profile=self)
         return posts
 
 
 class Post(models.Model):
-    """"""
+    """Define a post class associated with a Profile containing a
+    timestamp and caption."""
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now=True)
     caption = models.TextField(blank=True)
 
     def __str__(self):
-        """"""
+        """Return a string displaying a Post's poster and when it was
+        posted."""
         return f'Post by {self.profile.username} at {self.timestamp}'
 
     def get_all_photos(self):
+        """Return every Photo associated with a Post."""
         photos = Photo.objects.filter(post=self)
         return photos
 
 class Photo(models.Model):
-    """"""
+    """Define a photo class associated with a Post contains a timestamp and
+    either a WWW URL to an image or a URL to an uploaded image."""
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     image_url = models.URLField(blank=True)
     image_file = models.ImageField(blank=True)

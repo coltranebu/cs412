@@ -35,41 +35,41 @@ class CreatePostView(CreateView):
     template_name = "mini_insta/create_post_form.html"
 
     def get_success_url(self):
+        """Direct the user to a post once it is created."""
         pk = self.kwargs['pk']
         return reverse('post', kwargs={'pk':self.object.pk})
 
     def get_context_data(self):
-        """"""
-        # get context dictionary
+        """Return the profile associated with a post."""
+        # Get context dictionary
         context = super().get_context_data()
-        # get primary key of profile the form is for
+        # Get primary key of profile the form is for
         pk = self.kwargs['pk']
-        # get profile corresponding to primary key
+        # Get profile corresponding to primary key
         profile = Profile.objects.get(pk=pk)
-        # define and return context
+        # Define and return context
         context['profile'] = profile
         return context
 
     def form_valid(self, form):
-        """"""
+        """Create a Post and its associated Photos based on the completed
+        form."""
         pk = self.kwargs['pk']
         profile = Profile.objects.get(pk=pk)
-        # attach profile to post
+        # Attach profile to post
         form.instance.profile = profile
-        
-        # create post
+        # Create post
         response = super().form_valid(form)
 
-        # create new Photo using request.POST object
+        # Create new Photo using request.POST object
         # Photo.objects.create(post=self.object, \
         # image_url=self.request.POST['image_url'])
 
-        # create new Photos
+        # Get all images
         files = self.request.FILES.getlist('image_files')
-        print(files)
+        # Create new Photos based on images
         for file in files:
             Photo.objects.create(post=self.object, image_file=file)
-
         return response
         
 

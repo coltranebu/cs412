@@ -46,7 +46,9 @@ to a user's profile.
                     <a href="{% url 'post' post.pk %}">
                         <!-- If there is an image, show it. Otherwise, use a
                          placeholder. -->
-                        <!-- Django does not allow for line breaks. -->
+                        <!-- Django does not allow for line breaks within
+                        Python code, so as far as I know, the following line
+                        may not be under eighty characters in length. -->
                         {% if post.get_all_photos.first.image_url != None and post.get_all_photos.first.image_file != None %}
                             <!-- If URL, reference that. Otherwise, file. -->
                             {% if post.get_all_photos.first.image_url %}

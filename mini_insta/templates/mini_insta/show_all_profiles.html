@@ -10,11 +10,9 @@ database in a grid.
     
     <main>
         <div class="grid-container">
-
             <!-- For loop iterating through every profile and displaying it -->
             {% for profile in profiles %}
                 <div class="grid-item">
-
                     <!-- Display name -->
                     <span>{{profile.display_name}}</span>
 
@@ -23,9 +21,7 @@ database in a grid.
                         <img src="{{profile.profile_image_url}}"></a>
                 </div>
             {% endfor %}
-
         </div>
-
     </main>
         
     {% endblock %}

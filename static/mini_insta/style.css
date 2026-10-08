@@ -145,10 +145,6 @@ main {
     object-fit: cover;
 }
 
-.post-photos {
-
-}
-
 .post-photo {
     max-height: 80vh;
     max-width: 100%;
