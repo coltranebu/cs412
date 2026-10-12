@@ -33,7 +33,7 @@ and stylesheet.
             <a href="{% url 'show_all_profiles' %}">
                 <p>Show all profiles</p>
             </a>
-            <!-- Only show "create post" if on profile -->
+            <!-- Only show "create post" if profile is in context -->
             {% if profile %}
                 <a href="{% url 'create_post' profile.pk %}">
                     <p>Create post</p>

@@ -7,6 +7,13 @@ class CreateArticleForm(forms.ModelForm):
         model = Article
         fields = ['author', 'title', 'text', 'image_file']
 
+class UpdateArticleForm(forms.ModelForm):
+
+    class Meta:
+        model = Article
+        fields = ['title', 'text']
+        
+
 class CreateCommentForm(forms.ModelForm):
 
     class Meta:

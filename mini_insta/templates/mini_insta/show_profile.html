@@ -29,6 +29,11 @@ to a user's profile.
                 <!-- Temporary followers/ing information -->
                 <h6>Followers: 0</h6>
                 <h6>Following: 0</h6>
+                
+                <!-- Link to edit profile-->
+                <a href="{% url 'update_profile' profile.pk %}">
+                    <h6>Edit profile</h6>
+                </a>
             </div>
         </div>
 

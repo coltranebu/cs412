@@ -4,6 +4,7 @@
 # database.
 
 from django.db import models
+from django.urls import reverse
 
 # Create your models here.
 
@@ -25,6 +26,10 @@ class Profile(models.Model):
         """Return every post associated with a given Profile."""
         posts = Post.objects.filter(profile=self)
         return posts
+
+    def get_absolute_url(self):
+        """Return URL corresponding to Profile."""
+        return reverse('show_profile', kwargs={'pk':self.pk})
 
 
 class Post(models.Model):
