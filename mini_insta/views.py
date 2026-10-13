@@ -3,7 +3,8 @@
 # This file defines each view used in the website.
 
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView,\
+DeleteView
 from .models import Profile, Post, Photo
 from .forms import CreatePostForm, UpdateProfileForm
 from django.urls import reverse
@@ -77,3 +78,30 @@ class UpdateProfileView(UpdateView):
     model = Profile
     form_class = UpdateProfileForm
     template_name = "mini_insta/update_profile_form.html"
+
+class DeletePostView(DeleteView):
+    """Define a view which allows the user to delete a post."""
+    model = Post
+    template_name = "mini_insta/delete_post_form.html"
+
+    def get_context_data(self, **kwargs):
+        """Return the post and profile specific to a deletion."""
+        # Get context dictionary
+        context = super().get_context_data()
+        # Get primary key of the post
+        pk = self.kwargs['pk']
+        # Get post corresponding to primary key
+        post = Post.objects.get(pk=pk)
+        context['post'] = post
+        return context
+
+    def get_success_url(self):
+        """Redirect user to profile after deletion."""
+        # find the PK for this comment
+        pk = self.kwargs['pk']
+        # find the Post object:
+        post = Post.objects.get(pk=pk)
+        # find the PK of the Profile to which this Post is associated:
+        profile = post.profile
+        # return the URL to redirect to:
+        return reverse('show_profile', kwargs={'pk':profile.pk})

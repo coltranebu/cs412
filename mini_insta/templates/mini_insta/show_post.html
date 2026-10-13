@@ -50,6 +50,12 @@ This is the "Show Post" page, which displays all the details of any one post.
         <!-- Caption -->
         <br>
         <p>{{post.caption}}</p>
+
+        <!-- Delete -->
+        <br>
+        <a href="{% url 'delete_post' post.pk %}">
+            <p>Delete post</p>
+        </a>
     </main>
         
     {% endblock %}

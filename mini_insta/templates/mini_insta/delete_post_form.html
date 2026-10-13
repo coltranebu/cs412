@@ -1,0 +1,33 @@
+<!--
+mini_insta/templates/mini_insta/delete_post_form.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-12
+This page allows the user to delete a post.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+        <!-- Hyperlink to return to profile -->
+        <a href="{% url 'post' post.pk %}">
+            <p>Back</p>
+        </a>
+        <br>
+        <h1>Delete post from {{post.timestamp}}?</h1>
+        <p>{{post.caption}}</p>
+
+        <!-- Delete -->
+        <form method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+        </form>
+
+        <!-- Cancel -->
+        <form action="{% url 'post' post.pk %}" method="GET">
+            <input type="submit" value="Cancel">
+        </form>
+        
+
+    </main>
+        
+    {% endblock %}
