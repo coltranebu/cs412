@@ -15,7 +15,7 @@ class Profile(models.Model):
     display_name = models.TextField(blank=True)
     profile_image_url = models.TextField(blank=True)
     bio_text = models.TextField(blank=True)
-    join_date = models.DateField(auto_now=True)
+    join_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         """Return a string displaying a profile's display name and
@@ -36,7 +36,7 @@ class Post(models.Model):
     """Define a post class associated with a Profile containing a
     timestamp and caption."""
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
     caption = models.TextField(blank=True)
 
     def __str__(self):
@@ -55,7 +55,7 @@ class Photo(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     image_url = models.URLField(blank=True)
     image_file = models.ImageField(blank=True)
-    timestamp = models.DateTimeField(auto_now=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         """Return a string representation of a Photo."""

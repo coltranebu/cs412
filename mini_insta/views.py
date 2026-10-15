@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView,\
 DeleteView
 from .models import Profile, Post, Photo
-from .forms import CreatePostForm, UpdateProfileForm
+from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 from django.urls import reverse
 from django.http import HttpResponse
 
@@ -85,7 +85,7 @@ class DeletePostView(DeleteView):
     template_name = "mini_insta/delete_post_form.html"
 
     def get_context_data(self, **kwargs):
-        """Return the post and profile specific to a deletion."""
+        """Return the post specific to a deletion."""
         # Get context dictionary
         context = super().get_context_data()
         # Get primary key of the post
@@ -97,7 +97,7 @@ class DeletePostView(DeleteView):
 
     def get_success_url(self):
         """Redirect user to profile after deletion."""
-        # find the PK for this comment
+        # find the PK for this post
         pk = self.kwargs['pk']
         # find the Post object:
         post = Post.objects.get(pk=pk)
@@ -105,3 +105,29 @@ class DeletePostView(DeleteView):
         profile = post.profile
         # return the URL to redirect to:
         return reverse('show_profile', kwargs={'pk':profile.pk})
+
+class UpdatePostView(UpdateView):
+    """Define a view which allows the user to update a post."""
+    model = Post
+    form_class = UpdatePostForm
+    template_name = "mini_insta/update_post_form.html"
+
+    def get_context_data(self, **kwargs):
+        """Return the post specific to an update."""
+        # Get context dictionary
+        context = super().get_context_data()
+        # Get primary key of the post
+        pk = self.kwargs['pk']
+        # Get post corresponding to primary key
+        post = Post.objects.get(pk=pk)
+        context['post'] = post
+        return context
+
+    def get_success_url(self):
+        """Redirect user to post after updating it."""    
+        # find the PK for this post
+        pk = self.kwargs['pk']
+        # find the Post object:
+        post = Post.objects.get(pk=pk)
+        # return the URL to redirect to:
+        return reverse('post', kwargs={'pk':post.pk})

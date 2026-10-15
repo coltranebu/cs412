@@ -1,0 +1,35 @@
+<!--
+mini_insta/templates/mini_insta/update_post_form.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-15
+This page allows the user to update a post.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+        <!-- Hyperlink to return to profile -->
+        <a href="{% url 'show_profile' post.profile.pk %}">
+            <p>Back</p>
+        </a>
+        <br>
+        <h1>Update post by {{post.profile.display_name}} at {{post.timestamp}}</h1>
+
+        <!-- Form to update a profile -->
+        <form action="{% url 'update_post' post.pk %}" method="POST">
+            {% csrf_token %}
+            <table>
+                {{form.as_table}}
+            </table>
+            <input type="submit" name="submit" value="Update">
+        </form>
+        
+        <!-- Cancel and return to profile -->
+        <form action="{% url 'show_profile' post.profile.pk %}" method="GET">
+            <input type="submit" name="submit" value="Cancel">
+        </form>
+        
+
+    </main>
+        
+    {% endblock %}
