@@ -131,3 +131,37 @@ class UpdatePostView(UpdateView):
         post = Post.objects.get(pk=pk)
         # return the URL to redirect to:
         return reverse('post', kwargs={'pk':post.pk})
+
+class ShowFollowersDetailView(DetailView):
+    """Define a view which displays all of a Profile's followers."""
+    model = Profile
+    template_name = "mini_insta/show_followers.html"
+
+    def get_context_data(self, **kwargs):
+        """Return the Profile specific to the DetailView."""
+        # Get context dictionary
+        context = super().get_context_data()
+        # Get primary key of profile the page corresponds to
+        pk = self.kwargs['pk']
+        # Get profile corresponding to primary key
+        profile = Profile.objects.get(pk=pk)
+        # Define and return context
+        context['profile'] = profile
+        return context
+
+class ShowFollowingDetailView(DetailView):
+    """Define a view which displays Profiles whom a Profile follows."""
+    model = Profile
+    template_name = "mini_insta/show_following.html"
+
+    def get_context_data(self, **kwargs):
+        """Return the Profile specific to the DetailView."""
+        # Get context dictionary
+        context = super().get_context_data()
+        # Get primary key of profile the page corresponds to
+        pk = self.kwargs['pk']
+        # Get profile corresponding to primary key
+        profile = Profile.objects.get(pk=pk)
+        # Define and return context
+        context['profile'] = profile
+        return context

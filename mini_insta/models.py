@@ -31,6 +31,31 @@ class Profile(models.Model):
         """Return URL corresponding to Profile."""
         return reverse('show_profile', kwargs={'pk':self.pk})
 
+    def get_followers(self):
+        """Return a list of Profiles who follow a Profile."""
+        follows = Follow.objects.filter(profile=self)
+        profiles = []
+        # For each Follow object, add to profiles the following person
+        for follow in follows:
+            profiles.append(follow.follower_profile)
+        return profiles
+
+    def get_num_followers(self):
+        """Return the number of followers a Profile has."""
+        return len(self.get_followers())
+
+    def get_following(self):
+        """Return a list of Profiles whom a Profile follows."""
+        follows = Follow.objects.filter(follower_profile=self)
+        profiles = []
+        # For each Follow object, add to profiles the following person
+        for follow in follows:
+            profiles.append(follow.profile)
+        return profiles
+
+    def get_num_following(self):
+        """Return the number Profiles whom a Profile follows."""
+        return len(self.get_following())
 
 class Post(models.Model):
     """Define a post class associated with a Profile containing a
@@ -75,3 +100,15 @@ class Photo(models.Model):
         else:
             return self.image_file.url
 
+class Follow(models.Model):
+    """Define a relation that associates two profiles; one following other"""
+    # profile: person being followed; follower_profile: person following
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, \
+    related_name="profile")
+    follower_profile = models.ForeignKey(Profile, on_delete=models.CASCADE, \
+    related_name="follower_profile")
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """Return a string representation of a Follow."""
+        return f'{self.follower_profile.display_name} follows {self.profile.display_name}'

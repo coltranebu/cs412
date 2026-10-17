@@ -26,9 +26,17 @@ to a user's profile.
                 <br>
                 <h6>Joined: {{profile.join_date}}</h6>
 
-                <!-- Temporary followers/ing information -->
-                <h6>Followers: 0</h6>
-                <h6>Following: 0</h6>
+                <!-- Follower/ing information -->
+                <h6>
+                    <a href="{% url 'show_followers' profile.pk %}">
+                        Followers: {{profile.get_num_followers}}
+                    </a>
+                </h6>
+                <h6>
+                    <a href="{% url 'show_following' profile.pk %}">
+                        Following: {{profile.get_num_following}}
+                    </a>
+                </h6>
                 
                 <!-- Link to edit profile-->
                 <a href="{% url 'update_profile' profile.pk %}">

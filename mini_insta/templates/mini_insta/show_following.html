@@ -1,0 +1,72 @@
+<!--
+mini_insta/templates/mini_insta/show_following.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-17
+This page displays every Profile which a given Profile follows.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+        <!-- Header, with profile picture, name, statistics, etc. -->
+        <div class="profile-header">
+            
+            <!-- Profile picture on left -->
+            <div class="profile-header-image">
+                <a href="{% url 'show_profile' profile.pk %}">
+                    <img src="{{profile.profile_image_url}}">
+                </a>
+            </div>
+
+            <!-- Biographical data on right -->
+            <div class="profile-header-right">
+                <h2>{{profile.display_name}}</h2>
+                <h3>@{{profile.username}}</h3>
+                <br>
+                <h6>Joined: {{profile.join_date}}</h6>
+
+                <!-- Follower/ing information -->
+                <h6>
+                    <a href="{% url 'show_followers' profile.pk %}">
+                        Followers: {{profile.get_num_followers}}
+                    </a>
+                </h6>
+                <h6>
+                    <a href="{% url 'show_following' profile.pk %}">
+                        Following: {{profile.get_num_following}}
+                    </a>
+                </h6>
+            </div>
+        </div>
+
+        <!-- Following information -->
+        <!-- Profile follows at least one person -->
+        {% if profile.get_num_following > 0 %}
+            <h2>
+                <a href="{% url 'show_profile' profile.pk %}">
+                    {{profile.display_name}}</a> follows:
+            </h2>
+            <br>
+            <ul class="profile-list">
+                <!-- Show display name and username of each followee -->
+                {% for prof in profile.get_following %}
+                    <li>
+                        <a href="{% url 'show_profile' prof.pk %}">
+                            <p>{{prof.display_name}} (@{{prof.username}})</p>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        <!-- Profile does not follow anyone -->
+        {% else %}
+            <h2>
+                <a href="{% url 'show_profile' profile.pk %}">
+                    {{profile.display_name}}</a> doesn't follow anyone.
+            </h2>
+        {% endif %}
+
+
+
+    </main>
+        
+    {% endblock %}

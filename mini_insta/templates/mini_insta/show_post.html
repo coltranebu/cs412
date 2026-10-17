@@ -26,9 +26,17 @@ This is the "Show Post" page, which displays all the details of any one post.
                 <br>
                 <h6>Joined: {{post.profile.join_date}}</h6>
 
-                <!-- Temporary followers/ing information -->
-                <h6>Followers: 0</h6>
-                <h6>Following: 0</h6>
+                <!-- Follower/ing information -->
+                <h6>
+                    <a href="{% url 'show_followers' post.profile.pk %}">
+                        Followers: {{post.profile.get_num_followers}}
+                    </a>
+                </h6>
+                <h6>
+                    <a href="{% url 'show_following' post.profile.pk %}">
+                        Following: {{post.profile.get_num_following}}
+                    </a>
+                </h6>
             </div>
         </div>
 
