@@ -165,3 +165,21 @@ class ShowFollowingDetailView(DetailView):
         # Define and return context
         context['profile'] = profile
         return context
+
+class ShowFeedView(DetailView):
+    """Define a view which displays every Post by every Profile whom a Profile
+    follows."""
+    model = Profile
+    template_name = "mini_insta/show_feed.html"
+
+    def get_context_data(self, **kwargs):
+        """Return the Profile specific to the DetailView."""
+        # Get context dictionary
+        context = super().get_context_data()
+        # Get primary key of profile the page corresponds to
+        pk = self.kwargs['pk']
+        # Get profile corresponding to primary key
+        profile = Profile.objects.get(pk=pk)
+        # Define and return context
+        context['profile'] = profile
+        return context

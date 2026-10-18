@@ -56,6 +56,14 @@ class Profile(models.Model):
     def get_num_following(self):
         """Return the number Profiles whom a Profile follows."""
         return len(self.get_following())
+    
+    def get_post_feed(self):
+        """Return every Post by each Profile a Profile follows."""
+        posts = []
+        for profile in self.get_following():
+            for post in profile.get_all_posts():
+                posts.append(post)
+        return posts
 
 class Post(models.Model):
     """Define a post class associated with a Profile containing a
@@ -90,6 +98,8 @@ class Post(models.Model):
 
     def get_num_likes_minus_one(self):
         """Return the number of Likes associated with a Post, minus one."""
+        # This CANNOT be good functional style, but I do not know how else to
+        # get this information 
         return len(self.get_likes()) - 1
 
 class Photo(models.Model):

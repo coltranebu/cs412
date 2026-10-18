@@ -35,6 +35,8 @@ nav ul {
 nav ul li {
     font-family: Arial, sans-serif;
     margin: 0;
+    padding-right: 10px;
+    float: left;
 }
 
 nav a {

@@ -86,9 +86,11 @@ This is the "Show Post" page, which displays all the details of any one post.
         </p>
 
         <!-- Comments -->
-        <br>
-        <h2>Comments</h2>
-        <br>
+        {% if post.get_all_comments %}
+            <br>
+            <h2>Comments</h2>
+            <br>
+        {% endif %}
         {% for comment in post.get_all_comments %}
             <h3><a href="{% url 'show_profile' comment.profile.pk %}">
                 {{comment.profile.display_name}}</a> at {{comment.timestamp}}
