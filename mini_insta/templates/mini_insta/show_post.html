@@ -59,11 +59,44 @@ This is the "Show Post" page, which displays all the details of any one post.
         <br>
         <p>{{post.caption}}</p>
 
+        <!-- Likes -->
+        <br>
+        <!-- Exactly one like -->
+        {% if post.get_num_likes == 1 %}
+            <h3>Liked by 
+                <a href=
+                "{% url 'show_profile' post.get_likes.first.profile.pk %}">
+                {{post.get_likes.first.profile.display_name}}</a>.</h3>
+        <!-- Multiple likes -->
+        {% elif post.get_num_likes > 1 %}
+            <h3>Liked by 
+                <a href=
+                "{% url 'show_profile' post.get_likes.first.profile.pk %}">
+                {{post.get_likes.first.profile.display_name}}</a>
+                and {{post.get_num_likes_minus_one}} others.</h3>
+        <!-- No likes = no display -->
+        {% endif %}
+
+        
+
         <!-- Delete -->
         <br>
-        <a href="{% url 'delete_post' post.pk %}">
-            <p>Delete post</p>
-        </a>
+        <p>
+            <a href="{% url 'delete_post' post.pk %}">Delete post</a>
+        </p>
+
+        <!-- Comments -->
+        <br>
+        <h2>Comments</h2>
+        <br>
+        {% for comment in post.get_all_comments %}
+            <h3><a href="{% url 'show_profile' comment.profile.pk %}">
+                {{comment.profile.display_name}}</a> at {{comment.timestamp}}
+            </h3>
+            <p>{{comment.text}}</p>
+            <br>
+        {% endfor %}
+
     </main>
         
     {% endblock %}

@@ -74,6 +74,24 @@ class Post(models.Model):
         photos = Photo.objects.filter(post=self)
         return photos
 
+    def get_all_comments(self):
+        """Return every Comment associated with a Post."""
+        comments = Comment.objects.filter(post=self)
+        return comments
+    
+    def get_likes(self):
+        """Return every Like associated with a Post."""
+        likes = Like.objects.filter(post=self)
+        return likes
+
+    def get_num_likes(self):
+        """Return the number of Likes associated with a Post."""
+        return len(self.get_likes())
+
+    def get_num_likes_minus_one(self):
+        """Return the number of Likes associated with a Post, minus one."""
+        return len(self.get_likes()) - 1
+
 class Photo(models.Model):
     """Define a photo class associated with a Post contains a timestamp and
     either a WWW URL to an image or a URL to an uploaded image."""
@@ -111,4 +129,26 @@ class Follow(models.Model):
 
     def __str__(self):
         """Return a string representation of a Follow."""
+        # String too long for 80 character width
         return f'{self.follower_profile.display_name} follows {self.profile.display_name}'
+
+class Comment(models.Model):
+    """Define a Comment class associated with a Post and a Profle."""
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    text = models.TextField(blank=True)
+
+    def __str__(self):
+        """Return a string representation of a Comment."""
+        return f'Comment by {self.profile.display_name} on {self.post.__str__()}'
+
+class Like(models.Model):
+    """Define a Like class associated with a Profile and a Post."""
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """Return a string representation of a Like."""
+        return f'{self.profile.display_name} liked {self.post.__str__()}'
