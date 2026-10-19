@@ -1,0 +1,32 @@
+<!--
+mini_insta/templates/mini_insta/search.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-18
+This page displays a form where the user may search Posts and Profiles.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+        
+        <h1>Search</h1>
+        <br>
+
+        <!-- Form to update a profile -->
+        <form action="{% url 'search' profile.pk %}" method="GET">
+            {% csrf_token %}
+            <p>Search for text, tags, or people:</p>
+            <textarea name="query" rows="3" cols="60"></textarea>
+            <br>
+            <input type="submit" name="submit" value="Search">
+        </form>
+        
+        <!-- Cancel and return to profile -->
+        <form action="{% url 'show_all_profiles' %}" method="GET">
+            <input type="submit" name="submit" value="Cancel">
+        </form>
+        
+
+    </main>
+        
+    {% endblock %}

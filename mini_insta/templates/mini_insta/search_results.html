@@ -1,0 +1,97 @@
+<!--
+mini_insta/templates/mini_insta/search_results.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-18
+This page displays search results.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+        
+        <h1>Search Results</h1>
+        <hr>
+        <br>
+
+        <h1>Profiles:</h1>
+        <div class="grid-container">
+            <!-- For loop iterating through every profile and displaying it -->
+            {% for profile in profiles %}
+                <div class="grid-item">
+                    <!-- Display name -->
+                    <span>{{profile.display_name}}</span>
+
+                    <!-- Display image in the form of a link to profile -->
+                    <a href="{% url 'show_profile' profile.pk %}">
+                        <img src="{{profile.profile_image_url}}"></a>
+                </div>
+            {% endfor %}
+        </div>
+
+        <h1>Posts:</h1>
+        <br>
+        <hr>
+        <br>
+        {% for post in posts %}
+            <!-- Post content -->
+            <!-- Timestamp -->
+            <h1>
+                <a href="{% url 'show_profile' post.profile.pk %}">
+                    {{post.profile.display_name}}</a>
+                at {{post.timestamp}}</h1>
+            <!-- Photos -->
+            <div class="post-photos">
+                <!-- For loop iterating through every photo and displaying it -->
+                {% if post.get_all_photos.first %}
+                    <!-- If URL, reference that. Otherwise, use file. -->
+                    {% if post.get_all_photos.first.image_url %}
+                        <img class="post-photo" src="{{post.get_all_photos.first.image_url}}">
+                    {% else %}
+                        <img class="post-photo" src="{{post.get_all_photos.first.image_file.url}}">
+                    {% endif %}
+                {% endif %}
+                    
+            </div>
+            <!-- Caption -->
+            <br>
+            <p>{{post.caption}}</p>
+
+            <!-- Likes -->
+            <br>
+            <!-- Exactly one like -->
+            {% if post.get_num_likes == 1 %}
+                <h3>Liked by 
+                    <a href=
+                    "{% url 'show_profile' post.get_likes.first.profile.pk %}">
+                    {{post.get_likes.first.profile.display_name}}</a>.</h3>
+            <!-- Multiple likes -->
+            {% elif post.get_num_likes > 1 %}
+                <h3>Liked by 
+                    <a href=
+                    "{% url 'show_profile' post.get_likes.first.profile.pk %}">
+                    {{post.get_likes.first.profile.display_name}}</a>
+                    and {{post.get_num_likes_minus_one}} others.</h3>
+            <!-- No likes = no display -->
+            {% endif %}
+
+            <!-- Comments -->
+            {% if post.get_all_comments %}
+                <br>
+                <h2>Comments</h2>
+                <br>
+            {% endif %}
+            {% for comment in post.get_all_comments %}
+                <h3><a href="{% url 'show_profile' comment.profile.pk %}">
+                    {{comment.profile.display_name}}</a> at {{comment.timestamp}}
+                </h3>
+                <p>{{comment.text}}</p>
+                <br>
+            {% endfor %}
+            <br>
+            <hr>
+            <br>
+        {% endfor %}
+
+    </main>
+        
+    {% endblock %}

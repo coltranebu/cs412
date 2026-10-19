@@ -25,12 +25,16 @@ and stylesheet.
                             Show Feed</a></li>
                         <li><a href="{% url 'show_profile' profile.pk %}">
                             Profile</a></li>
+                        <li><a href="{% url 'search' profile.pk %}">
+                            Search</a></li>
                     {% endif %}
                     {% if post %}
                         <li><a href="{% url 'show_feed' post.profile.pk %}">
                             Show Feed</a></li>
                         <li><a href="{% url 'show_profile' post.profile.pk %}">
                             Profile</a></li>
+                        <li><a href="{% url 'search' post.profile.pk %}">
+                            Search</a></li>
                     {% endif %}
                 </ul>
             </nav>
@@ -51,7 +55,11 @@ and stylesheet.
                 <a href="{% url 'create_post' profile.pk %}">
                     <p>Create post</p>
                 </a>
+                <a href="{% url 'search' profile.pk %}">
+                    <p>Search</p>
+                </a>
             {% endif %}
+            
         </footer>
     </body>
 </html>
