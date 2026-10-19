@@ -79,9 +79,10 @@ This is the "Show Post" page, which displays all the details of any one post.
 
         
 
-        <!-- Delete -->
+        <!-- Update or Delete -->
         <br>
         <p>
+            <a href="{% url 'update_post' post.pk %}">Update post</a>
             <a href="{% url 'delete_post' post.pk %}">Delete post</a>
         </p>
 

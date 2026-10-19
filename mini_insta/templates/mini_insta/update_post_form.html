@@ -13,9 +13,11 @@ This page allows the user to update a post.
             <p>Back</p>
         </a>
         <br>
-        <h1>Update post by {{post.profile.display_name}} at {{post.timestamp}}</h1>
+        <h1>
+            Update post by {{post.profile.display_name}} at {{post.timestamp}}
+        </h1>
 
-        <!-- Form to update a profile -->
+        <!-- Form to update a post -->
         <form action="{% url 'update_post' post.pk %}" method="POST">
             {% csrf_token %}
             <table>
