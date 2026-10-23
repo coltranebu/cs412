@@ -1,0 +1,23 @@
+<!--
+mini_insta/templates/mini_insta/register.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-23
+This page allows the user to register a User.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+        
+        <h1>Register for a new account</h1>
+
+        <!-- Registration form -->
+        <form action="{% url 'register' %}" method="POST">
+            {% csrf_token %}
+            {{form}}
+            <input type="submit">
+        </form>
+
+    </main>
+        
+    {% endblock %}

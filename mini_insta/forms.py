@@ -25,3 +25,10 @@ class UpdatePostForm(forms.ModelForm):
         """Define a class containing the meta aspects of UpdatePostForm."""
         model = Post
         fields = ['caption']
+
+class CreateProfileForm(forms.ModelForm):
+    """Define a class which creates a form to create a Profile."""
+    class Meta:
+        """Define a class containing the meta aspects of CreateProfileForm."""
+        model = Profile
+        fields = ['username', 'display_name', 'profile_image_url', 'bio_text']

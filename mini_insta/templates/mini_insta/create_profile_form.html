@@ -1,0 +1,35 @@
+<!--
+mini_insta/templates/mini_insta/update_profile_form.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-23
+This page allows the user to create a profile.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+        <!-- Hyperlink to return to profile -->
+        <a href="{% url 'show_all_profiles' %}">
+            <p>Back</p>
+        </a>
+        <br>
+        <h1>Create a profile</h1>
+
+        <!-- Form to update a profile -->
+        <form action="{% url 'create_profile' %}" method="POST">
+            {% csrf_token %}
+            <table>
+                {{form.as_table}}
+            </table>
+            <input type="submit" name="submit" value="Create">
+        </form>
+        
+        <!-- Cancel and return to profile -->
+        <form action="{% url 'show_all_profiles' %}" method="GET">
+            <input type="submit" name="submit" value="Cancel">
+        </form>
+        
+
+    </main>
+        
+    {% endblock %}

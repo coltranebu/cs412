@@ -5,11 +5,14 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView,\
 DeleteView, TemplateView
-from .models import Profile, Post, Photo
-from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
+from .models import Profile, Post, Photo, User
+from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm, \
+CreateProfileForm
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
 
 # Create your views here.
 
@@ -287,3 +290,38 @@ class SearchView(MyLoginRequiredMixin, ListView):
 class LogoutConfirmationView(TemplateView):
     """Define a view which displays a confirmation page upon logout."""
     template_name = "mini_insta/logged_out.html"
+
+class UserRegistrationView(CreateView):
+    """Define a view which allows a person to register as a user."""
+    template_name = "mini_insta/register.html"
+    form_class = UserCreationForm
+    model = User
+
+    def get_success_url(self):
+        """Redirect user to login page after registering."""
+        return reverse('login')
+
+class CreateProfileView(LoginRequiredMixin, CreateView):
+    """Define a view which allows a user to create a profile."""
+    model = Profile
+    form_class = CreateProfileForm
+    template_name = "mini_insta/create_profile_form.html"
+
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
+    
+    def get_success_url(self):
+        """Direct the user their profile once it is created."""
+        return reverse('show_own_profile')
+
+    def get_object(self):
+        """Return the Profile specific to the CreateView."""
+        return super().get_logged_in_profile()
+
+    def form_valid(self, form):
+        """Associate Profile with User on form submission"""
+        user = self.request.user
+        form.instance.user = user
+        response = super().form_valid(form)
+        return response

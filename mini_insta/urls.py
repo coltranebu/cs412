@@ -22,4 +22,6 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name="mini_insta/login.html"), name="login"),
     path('logout/', auth_views.LogoutView.as_view(next_page='logout_confirmation'), name="logout"),
     path('logout_confirmation/', LogoutConfirmationView.as_view(), name="logout_confirmation"),
+    path('register/', UserRegistrationView.as_view(), name="register"),
+    path('create_profile/', CreateProfileView.as_view(), name="create_profile"),
 ]
