@@ -16,7 +16,7 @@ This page allows the user to update a profile.
         <h1>Update {{profile.display_name}} (@{{profile.username}})</h1>
 
         <!-- Form to update a profile -->
-        <form action="{% url 'update_profile' profile.pk %}" method="POST">
+        <form action="{% url 'update_profile' %}" method="POST">
             {% csrf_token %}
             <table>
                 {{form.as_table}}

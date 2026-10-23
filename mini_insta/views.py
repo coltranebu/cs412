@@ -9,8 +9,24 @@ from .models import Profile, Post, Photo
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 from django.urls import reverse
 from django.http import HttpResponse
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
+
+class MyLoginRequiredMixin(LoginRequiredMixin):
+    """Implements extra features to LoginRequireMixin such as the ability to
+    obtain the Profile of the logged in user."""
+    login_url = "{% url 'login' %}"
+
+    def get_logged_in_profile(self):
+        """Return the Profile corresponding to the user."""
+        return Profile.objects.get(user=self.request.user)
+
+    def get_context_data(self, **kwargs):
+        """Return the Profile context data."""
+        context = super().get_context_data()
+        context['profile'] = self.get_logged_in_profile()
+        return context
 
 class ProfileListView(ListView):
     """Define a view which displays all profiles in a grid."""
@@ -24,32 +40,48 @@ class ProfileDetailView(DetailView):
     template_name = "mini_insta/show_profile.html"
     context_object_name = "profile"
 
+class OwnProfileDetailView(MyLoginRequiredMixin, DetailView):
+    """Define a view which displays the details of one's own profile."""
+    model = Profile
+    template_name = "mini_insta/show_profile.html"
+    context_object_name = "profile"
+
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
+
+    def get_object(self):
+        """Return the Profile specific to the DetailView."""
+        return super().get_logged_in_profile()
+
 class PostDetailView(DetailView):
     """Define a view which displays the details of any one post."""
     model = Post
     template_name = "mini_insta/show_post.html"
     context_object_name = "post"
 
-class CreatePostView(CreateView):
+class CreatePostView(MyLoginRequiredMixin, CreateView):
     """Define a view which allows the user to create a post."""
     form_class = CreatePostForm
     template_name = "mini_insta/create_post_form.html"
+
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
 
     def get_success_url(self):
         """Direct the user to a post once it is created."""
         pk = self.kwargs['pk']
         return reverse('post', kwargs={'pk':self.object.pk})
 
-    def get_context_data(self):
-        """Return the profile associated with a post."""
+    def get_object(self):
+        """Return the Profile specific to the CreateView."""
+        return super().get_logged_in_profile()
+
+    def get_context_data(self, **kwargs):
+        """Return the Profile specific to the CreateView in context."""
         # Get context dictionary
         context = super().get_context_data()
-        # Get primary key of profile the form is for
-        pk = self.kwargs['pk']
-        # Get profile corresponding to primary key
-        profile = Profile.objects.get(pk=pk)
-        # Define and return context
-        context['profile'] = profile
         return context
 
     def form_valid(self, form):
@@ -73,16 +105,28 @@ class CreatePostView(CreateView):
             Photo.objects.create(post=self.object, image_file=file)
         return response
 
-class UpdateProfileView(UpdateView):
+class UpdateProfileView(MyLoginRequiredMixin, UpdateView):
     """Define a view which allows the user to update a profile."""
     model = Profile
     form_class = UpdateProfileForm
     template_name = "mini_insta/update_profile_form.html"
+    
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
 
-class DeletePostView(DeleteView):
+    def get_object(self):
+        """Return the Profile specific to the UpdateView."""
+        return super().get_logged_in_profile()
+
+class DeletePostView(MyLoginRequiredMixin, DeleteView):
     """Define a view which allows the user to delete a post."""
     model = Post
     template_name = "mini_insta/delete_post_form.html"
+
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
 
     def get_context_data(self, **kwargs):
         """Return the post specific to a deletion."""
@@ -106,11 +150,15 @@ class DeletePostView(DeleteView):
         # return the URL to redirect to:
         return reverse('show_profile', kwargs={'pk':profile.pk})
 
-class UpdatePostView(UpdateView):
+class UpdatePostView(MyLoginRequiredMixin, UpdateView):
     """Define a view which allows the user to update a post."""
     model = Post
     form_class = UpdatePostForm
     template_name = "mini_insta/update_post_form.html"
+
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
 
     def get_context_data(self, **kwargs):
         """Return the post specific to an update."""
@@ -166,37 +214,43 @@ class ShowFollowingDetailView(DetailView):
         context['profile'] = profile
         return context
 
-class ShowFeedView(DetailView):
+class ShowFeedView(MyLoginRequiredMixin, DetailView):
     """Define a view which displays every Post by every Profile whom a Profile
     follows."""
     model = Profile
     template_name = "mini_insta/show_feed.html"
 
-    def get_context_data(self, **kwargs):
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
+
+    def get_object(self):
         """Return the Profile specific to the DetailView."""
+        return super().get_logged_in_profile()
+
+    def get_context_data(self, **kwargs):
+        """Return the Profile specific to the DetailView in context."""
         # Get context dictionary
         context = super().get_context_data()
-        # Get primary key of profile the page corresponds to
-        pk = self.kwargs['pk']
-        # Get profile corresponding to primary key
-        profile = Profile.objects.get(pk=pk)
-        # Define and return context
-        context['profile'] = profile
         return context
 
-class SearchView(ListView):
+class SearchView(MyLoginRequiredMixin, ListView):
     """Define a view which displays Posts and Profiles relevant to a search
     query."""
     template_name = "mini_insta/search_results.html"
 
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
+
+    def get_object(self):
+        """Return the Profile specific to the ListView."""
+        return super().get_logged_in_profile()
+
     def get_context_data(self, **kwargs):
-        """Return the Profile specific to the DetailView."""
-        # Initialize context
+        """Return the Profile specific to the ListView."""
+        # Initialize context (with profile)
         context = super().get_context_data()
-        # Add profile to context
-        pk = self.kwargs['pk']
-        profile = Profile.objects.get(pk=pk)
-        context['profile'] = profile
         # Add query to context
         query = self.request.GET.get('query')
         context['query'] = query
@@ -219,7 +273,7 @@ class SearchView(ListView):
         if (not 'query' in self.request.GET):
             return render(request, \
             context=({'query' : '', \
-            'profile' : Profile.objects.get(pk=self.kwargs['pk'])}), \
+            'profile' : super().get_logged_in_profile()}), \
             template_name="mini_insta/search.html")
         # If query, fall back on ListView
         else:
@@ -229,5 +283,3 @@ class SearchView(ListView):
         """Return the Posts relevant to a query."""
         query = self.request.GET.get('query')
         return Post.objects.filter(caption__contains=query)
-    
-    

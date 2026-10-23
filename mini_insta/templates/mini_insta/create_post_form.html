@@ -16,7 +16,7 @@ This page allows the user to create a post for a profile.
         <h1>Create a new post for {{profile.display_name}}</h1>
 
         <!-- Form to create a post -->
-        <form action="{% url 'create_post' profile.pk %}" method="POST" 
+        <form action="{% url 'create_post' %}" method="POST" 
         enctype="multipart/form-data">
             {% csrf_token %}
             <table>

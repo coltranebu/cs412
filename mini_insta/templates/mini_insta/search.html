@@ -13,7 +13,7 @@ This page displays a form where the user may search Posts and Profiles.
         <br>
 
         <!-- Form to update a profile -->
-        <form action="{% url 'search' profile.pk %}" method="GET">
+        <form action="{% url 'search' %}" method="GET">
             {% csrf_token %}
             <p>Search for text, tags, or people:</p>
             <textarea name="query" rows="3" cols="60"></textarea>

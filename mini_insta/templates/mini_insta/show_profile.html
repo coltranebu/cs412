@@ -38,10 +38,12 @@ to a user's profile.
                     </a>
                 </h6>
                 
-                <!-- Link to edit profile-->
-                <a href="{% url 'update_profile' profile.pk %}">
-                    <h6>Edit profile</h6>
-                </a>
+                <!-- Link to edit profile. Only show if logged in as profile-->
+                {% if request.user.is_authenticated and profile.user == user %}
+                    <a href="{% url 'update_profile' %}">
+                        <h6>Edit profile</h6>
+                    </a>
+                {% endif %}
             </div>
         </div>
 

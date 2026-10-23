@@ -3,6 +3,9 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView, D
 from .models import Article, Comment
 from .forms import CreateArticleForm, CreateCommentForm, UpdateArticleForm
 from django.urls import reverse
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
 import random
 
 # Create your views here.
@@ -10,6 +13,13 @@ class ShowAllView(ListView):
     model = Article
     template_name = "blog/show_all.html"
     context_object_name = "articles"
+
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            print(f'ShowAllView.dispatch(): request.user={request.user}')
+        else:
+            print(f'ShowAllView.dispatch(): not logged in.')
+        return super().dispatch(request, *args, **kwargs)
 
 class ArticleView(DetailView):
     model = Article
@@ -25,11 +35,20 @@ class RandomArticleView(DetailView):
         article = random.choice(all_articles)
         return article
 
-class CreateArticleView(CreateView):
+class CreateArticleView(LoginRequiredMixin, CreateView):
     form_class = CreateArticleForm
     template_name = "blog/create_article_form.html"
 
+    def get_login_url(self):
+        return reverse('login')
+
     def form_valid(self, form):
+
+        # find the logged in user
+        user = self.request.user
+        # attach that user to the form instance to the Article object
+        form.instance.user = user
+
         return super().form_valid(form)
 
 class CreateCommentView(CreateView):
@@ -78,3 +97,16 @@ class DeleteCommentView(DeleteView):
         article = comment.article
         # return the URL to redirect to:
         return reverse('article', kwargs={'pk':article.pk})
+
+def LogoutView(request):
+    template_name = "blog/logout_form.html"
+    return render(request, template_name)
+
+class UserRegistrationView(CreateView):
+    template_name = "blog/register.html"
+    form_class = UserCreationForm
+    model = User
+
+    def get_success_url(self):
+        return reverse('login')
+

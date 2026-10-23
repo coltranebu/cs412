@@ -79,12 +79,14 @@ This is the "Show Post" page, which displays all the details of any one post.
 
         
 
-        <!-- Update or Delete -->
-        <br>
-        <p>
-            <a href="{% url 'update_post' post.pk %}">Update post</a>
-            <a href="{% url 'delete_post' post.pk %}">Delete post</a>
-        </p>
+        <!-- Update or Delete. Only show if logged in as post's profile -->
+        {% if request.user.is_authenticated and post.profile.user == user %}
+            <br>
+            <p>
+                <a href="{% url 'update_post' post.pk %}">Update post</a>
+                <a href="{% url 'delete_post' post.pk %}">Delete post</a>
+            </p>
+        {% endif %}
 
         <!-- Comments -->
         {% if post.get_all_comments %}
