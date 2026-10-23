@@ -34,6 +34,19 @@ and stylesheet.
                             Profile</a></li>
                         <li><a href="{% url 'search' %}">
                             Search</a></li>
+                        <li>
+                            <form action="{% url 'logout' %}"
+                                method="POST">
+                                {% csrf_token %}
+                                <input class="logout-button" type="submit"
+                                    value="Logout">
+                                <input type="hidden" name="next"
+                                    value="{% url 'logout_confirmation' %}">
+                            </form>
+                        </li>
+                    {% else %}
+                        <li><a href="{% url 'login' %}">
+                            Login</a></li>
                     {% endif %}
                 </ul>
             </nav>

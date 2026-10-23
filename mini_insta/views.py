@@ -4,7 +4,7 @@
 
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView,\
-DeleteView
+DeleteView, TemplateView
 from .models import Profile, Post, Photo
 from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm
 from django.urls import reverse
@@ -283,3 +283,7 @@ class SearchView(MyLoginRequiredMixin, ListView):
         """Return the Posts relevant to a query."""
         query = self.request.GET.get('query')
         return Post.objects.filter(caption__contains=query)
+
+class LogoutConfirmationView(TemplateView):
+    """Define a view which displays a confirmation page upon logout."""
+    template_name = "mini_insta/logged_out.html"

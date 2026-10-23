@@ -4,6 +4,7 @@
 
 from django.urls import path
 from .views import *
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('', ProfileListView.as_view(), name="show_all_profiles"),
@@ -18,4 +19,7 @@ urlpatterns = [
     path('profile/feed', ShowFeedView.as_view(), name="show_feed"),
     path('profile/search', SearchView.as_view(), name="search"),
     path('profile/', OwnProfileDetailView.as_view(), name="show_own_profile"),
+    path('login/', auth_views.LoginView.as_view(template_name="mini_insta/login.html"), name="login"),
+    path('logout/', auth_views.LogoutView.as_view(next_page='logout_confirmation'), name="logout"),
+    path('logout_confirmation/', LogoutConfirmationView.as_view(), name="logout_confirmation"),
 ]

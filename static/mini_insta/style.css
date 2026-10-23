@@ -154,3 +154,15 @@ main {
     border-style: solid;
     border-color: black;
 }
+
+/* Makes logout form submit button look like an ordinary link */
+.logout-button {
+    display: inline;
+    padding: 0;
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font: inherit;
+    text-decoration: underline;
+}
