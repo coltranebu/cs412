@@ -20,13 +20,15 @@ follow, in descending order of when they were posted.
                 at {{post.timestamp}}</h1>
             <!-- Photos -->
             <div class="post-photos">
-                <!-- For loop iterating through every photo and displaying it -->
+                <!-- For loop iterating through every photo & displaying it -->
                 {% if post.get_all_photos.first %}
                     <!-- If URL, reference that. Otherwise, use file. -->
                     {% if post.get_all_photos.first.image_url %}
-                        <img class="post-photo" src="{{post.get_all_photos.first.image_url}}">
+                        <img class="post-photo" 
+                        src="{{post.get_all_photos.first.image_url}}">
                     {% else %}
-                        <img class="post-photo" src="{{post.get_all_photos.first.image_file.url}}">
+                        <img class="post-photo" 
+                        src="{{post.get_all_photos.first.image_file.url}}">
                     {% endif %}
                 {% endif %}
                     
@@ -61,7 +63,8 @@ follow, in descending order of when they were posted.
             {% endif %}
             {% for comment in post.get_all_comments %}
                 <h3><a href="{% url 'show_profile' comment.profile.pk %}">
-                    {{comment.profile.display_name}}</a> at {{comment.timestamp}}
+                    {{comment.profile.display_name}}</a>
+                    at {{comment.timestamp}}
                 </h3>
                 <p>{{comment.text}}</p>
                 <br>

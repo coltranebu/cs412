@@ -1,0 +1,30 @@
+<!--
+mini_insta/templates/mini_insta/create_like_form.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-25
+This page allows the user to like a post.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+        <!-- Hyperlink to return to profile -->
+        <a href="{% url 'post' post.pk %}">
+            <p>Back</p>
+        </a>
+        <br>
+        <h1>Like {{post}}?</h1>
+
+        <!-- Form to create a Like -->
+        <form action="{% url 'create_like' post.pk %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" name="submit" value="Yes">
+        </form>
+
+        <!-- Cancel -->
+        <form action="{% url 'post' post.pk %}" method="GET">
+            <input type="submit" value="Cancel">
+        </form>
+    </main>
+        
+    {% endblock %}

@@ -5,9 +5,8 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView, CreateView, UpdateView,\
 DeleteView, TemplateView
-from .models import Profile, Post, Photo, User
-from .forms import CreatePostForm, UpdateProfileForm, UpdatePostForm, \
-CreateProfileForm
+from .models import Profile, Post, Photo, User, Follow, Like
+from .forms import *
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -320,8 +319,181 @@ class CreateProfileView(LoginRequiredMixin, CreateView):
         return super().get_logged_in_profile()
 
     def form_valid(self, form):
-        """Associate Profile with User on form submission"""
+        """Associate Profile with User on form submission."""
         user = self.request.user
+        # Set form user to the user filling it out
         form.instance.user = user
+        response = super().form_valid(form)
+        return response
+
+class CreateFollowView(MyLoginRequiredMixin, CreateView):
+    """Define a view which allows the user to follow a profile."""
+    model = Follow
+    form_class = CreateFollowForm
+    template_name = "mini_insta/create_follow_form.html"
+
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
+    
+    def get_success_url(self):
+        """Direct the user the profile they followed."""
+        return reverse('show_profile', kwargs={'pk':self.kwargs['pk']})
+
+    def get_context_data(self, **kwargs):
+        """Return the Profile context data."""
+        # Get super context data
+        context = super().get_context_data()
+        # Get primary key of URL
+        pk = self.kwargs['pk']
+        # Retrieve the profile being followed
+        other_profile = Profile.objects.get(pk=pk)
+        # Return context with profile being followed
+        context['other_profile'] = other_profile
+        return context
+    
+    def form_valid(self, form):
+        """Associate a Follow with two users."""
+        # Get primary key of URL
+        pk = self.kwargs['pk']
+        other_profile = Profile.objects.get(pk=pk)
+        # Set form profile to the profile being followed
+        form.instance.profile = other_profile
+
+        # Set form follower_profile to profile of the user
+        user = self.request.user
+        profile = Profile.objects.get(user=user)
+        form.instance.follower_profile = profile
+
+        # Return form
+        response = super().form_valid(form)
+        return response
+    
+class DeleteFollowView(MyLoginRequiredMixin, DeleteView):
+    """Define a view which allows the user to unfollow a Profile."""
+    model = Follow
+    form_class = DeleteFollowForm
+    template_name = "mini_insta/delete_follow_form.html"
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
+        
+    def get_success_url(self):
+        """Direct the user the profile they unfollowed."""
+        return reverse('show_profile', kwargs={'pk':self.kwargs['pk']})
+
+    def get_object(self):
+        """Return the Follow specific to the deletion."""
+        return Follow.objects.get(profile = \
+        Profile.objects.get(pk=self.kwargs['pk']),follower_profile= \
+        self.request.user.profile)
+
+    def get_context_data(self, **kwargs):
+        """Return the Profile context data."""
+        context = super().get_context_data()
+        # Get URL primary key
+        pk = self.kwargs['pk']
+        # Get profile being unfollowed
+        other_profile = Profile.objects.get(pk=pk)
+        # Return context with profile being unfollowed
+        context['other_profile'] = other_profile
+        return context
+        
+    def form_valid(self, form):
+        """Identify a Follow based on the surrounding information."""
+        # Add profile being unfollowed to form
+        pk = self.kwargs['pk']
+        other_profile = Profile.objects.get(pk=pk)
+        form.instance.profile = other_profile
+
+        # Add user's profile to form
+        user = self.request.user
+        profile = Profile.objects.get(user=user)
+        form.instance.follower_profile = profile
+
+        # Return form
+        response = super().form_valid(form)
+        return response
+
+class CreateLikeView(MyLoginRequiredMixin, CreateView):
+    """Define a view which allows the user to like a post."""
+    model = Like
+    form_class = CreateLikeForm
+    template_name = "mini_insta/create_like_form.html"
+
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
+    
+    def get_success_url(self):
+        """Direct the user the post they liked."""
+        return reverse('post', kwargs={'pk':self.kwargs['pk']})
+
+    def get_context_data(self, **kwargs):
+        """Return the Post context data."""
+        context = super().get_context_data()
+        pk = self.kwargs['pk']
+        post = Post.objects.get(pk=pk)
+        # Return context data with Post being liked
+        context['post'] = post
+        return context
+    
+    def form_valid(self, form):
+        """Associate a Like with a Post and a Profile."""
+        # Add Post being liked to form
+        pk = self.kwargs['pk']
+        post = Post.objects.get(pk=pk)
+        form.instance.post = post
+
+        # Add user's Profile to form
+        user = self.request.user
+        profile = Profile.objects.get(user=user)
+        form.instance.profile = profile
+
+        # Return form
+        response = super().form_valid(form)
+        return response
+
+class DeleteLikeView(MyLoginRequiredMixin, DeleteView):
+    """Define a view which allows the user to unlike a Post."""
+    model = Follow
+    form_class = DeleteLikeForm
+    template_name = "mini_insta/delete_like_form.html"
+    def get_login_url(self):
+        """Redirect user to login page if not logged in."""
+        return reverse('login')
+        
+    def get_success_url(self):
+        """Direct the user the post they unliked."""
+        return reverse('post', kwargs={'pk':self.kwargs['pk']})
+
+    def get_object(self):
+        """Return the Like specific to the deletion."""
+        return Like.objects.get(post = \
+        Post.objects.get(pk=self.kwargs['pk']),profile= \
+        self.request.user.profile)
+
+    def get_context_data(self, **kwargs):
+        """Return the Post context data."""
+        context = super().get_context_data()
+        pk = self.kwargs['pk']
+        post = Post.objects.get(pk=pk)
+        # Add Post being unliked to context
+        context['post'] = post
+        return context
+        
+    def form_valid(self, form):
+        """Identify a Like based on the surrounding information."""
+        # Add post to form
+        pk = self.kwargs['pk']
+        post = Post.objects.get(pk=pk)
+        form.instance.post = post
+
+        # Add user's Profile to form
+        user = self.request.user
+        profile = Profile.objects.get(user=user)
+        form.instance.profile = profile
+
+        # Return form
         response = super().form_valid(form)
         return response

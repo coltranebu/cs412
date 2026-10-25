@@ -1,0 +1,31 @@
+<!--
+mini_insta/templates/mini_insta/create_follow_form.html
+Coltrane Margosian. coltrane@bu.edu. 2026-10-23
+This page allows the user to follow another profile.
+-->
+{% extends 'mini_insta/base.html' %}
+
+    {% block content %}
+    
+    <main>
+        <!-- Hyperlink to return to profile -->
+        <a href="{% url 'show_profile' other_profile.pk %}">
+            <p>Back</p>
+        </a>
+        <br>
+        <h1>Follow {{other_profile.display_name}}?</h1>
+
+        <!-- Form to create a Follow -->
+        <form action="{% url 'create_follow' other_profile.pk %}" 
+        method="POST">
+            {% csrf_token %}
+            <input type="submit" name="submit" value="Yes">
+        </form>
+
+        <!-- Cancel -->
+        <form action="{% url 'show_profile' profile.pk %}" method="GET">
+            <input type="submit" value="Cancel">
+        </form>
+    </main>
+        
+    {% endblock %}

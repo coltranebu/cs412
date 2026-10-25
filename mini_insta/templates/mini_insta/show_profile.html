@@ -43,6 +43,16 @@ to a user's profile.
                     <a href="{% url 'update_profile' %}">
                         <h6>Edit profile</h6>
                     </a>
+                <!-- Unfollow button if following -->
+                {% elif request.user.is_authenticated and request.user.profile in profile.get_followers %}
+                    <a href="{% url 'delete_follow' profile.pk %}">
+                        <h6>Unfollow</h6>
+                    </a>
+                <!-- Follow button if not following -->
+                {% elif request.user.is_authenticated %}
+                    <a href="{% url 'create_follow' profile.pk %}">
+                        <h6>Follow</h6>
+                    </a>
                 {% endif %}
             </div>
         </div>

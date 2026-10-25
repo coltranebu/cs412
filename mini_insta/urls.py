@@ -24,4 +24,8 @@ urlpatterns = [
     path('logout_confirmation/', LogoutConfirmationView.as_view(), name="logout_confirmation"),
     path('register/', UserRegistrationView.as_view(), name="register"),
     path('create_profile/', CreateProfileView.as_view(), name="create_profile"),
+    path('profile/<int:pk>/follow', CreateFollowView.as_view(), name="create_follow"),
+    path('profile/<int:pk>/delete_follow', DeleteFollowView.as_view(), name="delete_follow"),
+    path('post/<int:pk>/like', CreateLikeView.as_view(), name="create_like"),
+    path('post/<int:pk>/delete_like', DeleteLikeView.as_view(), name="delete_like"),
 ]

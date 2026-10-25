@@ -93,6 +93,14 @@ class Post(models.Model):
         """Return every Like associated with a Post."""
         likes = Like.objects.filter(post=self)
         return likes
+    
+    def get_likes_profiles(self):
+        """Return every Profile assocated with each Like of a Post."""
+        profiles = []
+        # Iterate through every like and add their profiles to list
+        for like in self.get_likes():
+            profiles.append(like.profile)
+        return profiles
 
     def get_num_likes(self):
         """Return the number of Likes associated with a Post."""
@@ -139,6 +147,14 @@ class Follow(models.Model):
     related_name="follower_profile")
     timestamp = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        """Define the meta characteristics of class Follow."""
+        constraints = [
+            # Make it so there cannot be duplicates of the same Follow
+            models.UniqueConstraint(fields=['profile', 'follower_profile'], \
+            name="follow_uniqueness_constraint")
+        ]
+
     def __str__(self):
         """Return a string representation of a Follow."""
         # String too long for 80 character width
@@ -153,6 +169,7 @@ class Comment(models.Model):
 
     def __str__(self):
         """Return a string representation of a Comment."""
+        # String too long for 80 character width
         return f'Comment by {self.profile.display_name} on {self.post.__str__()}'
 
 class Like(models.Model):
@@ -160,6 +177,14 @@ class Like(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        """Define the meta characteristics of class Like."""
+        constraints = [
+            # Make it so there cannot be duplicates of the same Like
+            models.UniqueConstraint(fields=['post', 'profile'], \
+            name="like_uniqueness_constraint")
+        ]
 
     def __str__(self):
         """Return a string representation of a Like."""

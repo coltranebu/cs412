@@ -19,6 +19,7 @@ and stylesheet.
             <nav>
                 <ul>
                     <li>
+                        <!-- Show username, if applicable-->
                         {% if request.user.is_authenticated %}
                             <span>Logged in as {{request.user}} |</span>
                         {% else %}
@@ -27,6 +28,8 @@ and stylesheet.
                     </li>
                     <li><a href="{% url 'show_all_profiles' %}">
                         Show All Profiles</a></li>
+
+                    <!-- Show these only if used logged in -->
                     {% if request.user.is_authenticated %}
                         <li><a href="{% url 'show_feed' %}">
                             Show Feed</a></li>
@@ -37,8 +40,8 @@ and stylesheet.
                         <li><a href="{% url 'search' %}">
                             Search</a></li>
                         <li>
-                            <form action="{% url 'logout' %}"
-                                method="POST">
+                            <!-- Form button to log out -->
+                            <form action="{% url 'logout' %}" method="POST">
                                 {% csrf_token %}
                                 <input class="logout-button" type="submit"
                                     value="Logout">
@@ -46,6 +49,7 @@ and stylesheet.
                                     value="{% url 'logout_confirmation' %}">
                             </form>
                         </li>
+                    <!-- Prompt login at top if user not logged in -->
                     {% else %}
                         <li><a href="{% url 'login' %}">
                             Login</a></li>

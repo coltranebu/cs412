@@ -8,11 +8,14 @@ This page displays a login form.
 {% block content %}
 
 <h1>Login</h1>
+
+<!-- Login form -->
 <form action="{% url 'login' %}" method="POST">
     {% csrf_token %}
     {{form}}
     <input type="submit" value="Login">
 
+    <!-- Return to previous page. If none, default to show_all_profiles -->
     {% if request.GET.next %}
         <input type="hidden" name="next" value="{{request.GET.next}}">
     {% else %}
@@ -22,6 +25,6 @@ This page displays a login form.
 
 <hr>
 <span>Don't have an account?</span>
-<a href="">Register here</a>
+<a href="{% url 'register' %}">Register here</a>
 
 {% endblock %}

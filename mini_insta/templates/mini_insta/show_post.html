@@ -61,6 +61,20 @@ This is the "Show Post" page, which displays all the details of any one post.
 
         <!-- Likes -->
         <br>
+
+        <!-- Unlike button if not liked -->
+        <!-- Line too long for 80 char width -->
+        {% if request.user.is_authenticated and post.profile.user != user and request.user.profile in post.get_likes_profiles %}
+            <a href="{% url 'delete_like' post.pk %}">
+                <h3>Unlike post</h3>
+            </a>
+        <!-- Like button if not liked -->
+        {% elif request.user.is_authenticated and post.profile.user != user%}
+            <a href="{% url 'create_like' post.pk %}">
+                <h3>Like post</h3>
+            </a>
+        {% endif %}
+
         <!-- Exactly one like -->
         {% if post.get_num_likes == 1 %}
             <h3>Liked by 
@@ -76,8 +90,6 @@ This is the "Show Post" page, which displays all the details of any one post.
                 and {{post.get_num_likes_minus_one}} others.</h3>
         <!-- No likes = no display -->
         {% endif %}
-
-        
 
         <!-- Update or Delete. Only show if logged in as post's profile -->
         {% if request.user.is_authenticated and post.profile.user == user %}
