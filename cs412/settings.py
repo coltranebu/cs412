@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "restaurant", # NEW, ASSIGN 2
     "blog", # NEW, MODULE 3
     "mini_insta", # NEW, ASSIGN 3
+    "marathon_analytics", # NEW, MODULE 7
+    "voter_analytics", # NEW, ASSIGN 7
 ]
 
 MIDDLEWARE = [
