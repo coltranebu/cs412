@@ -10,4 +10,5 @@ urlpatterns = [
     path(r'', VotersListView.as_view(), name='home'),
     path(r'results', VotersListView.as_view(), name='voters_list'),
     path(r'voter/<int:pk>', VoterDetailView.as_view(), name='voter_detail'),
+    path(r'graphs', GraphListView.as_view(), name='graphs'),
 ]

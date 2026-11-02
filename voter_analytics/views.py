@@ -8,34 +8,41 @@ from django.views.generic import ListView, DetailView
 from .models import Voter
 
 import plotly
+# Recommended by Plotly docs
+import plotly.express as px
 import plotly.graph_objs as go
 
 # Create your views here.
 
 def get_party_list():
-        """Get list of distinct parties in database"""
+        """Get list of distinct parties in database."""
         parties = []
+        # Iterate through every Voter & check party
         for voter in Voter.objects.all():
+            # If new party, add it to list
             if voter.party not in parties:
                 parties.append(voter.party)
         return parties
 
 def get_dob_year_list():
-        """Get list of distinct year of birth in database"""
+        """Get list of distinct year of birth in database."""
         dob_years = []
+        # Iterate through every Voter & check year of birth
         for voter in Voter.objects.all().order_by('dob'):
+            # If new year, add it to list
             if voter.dob.year not in dob_years:
                 dob_years.append(voter.dob.year)
         return dob_years
 
 class VotersListView(ListView):
+    """Define a class which displays a filtered list of Voters"""
     model = Voter
     template_name = "voter_analytics/voters.html"
     context_object_name = "voters"
     paginate_by = 100
 
     def get_queryset(self):
-        """"""
+        """Return filtered QuerySet according to filters from search."""
         results = super().get_queryset()
 
         # Filter to party selected
@@ -95,21 +102,64 @@ class VotersListView(ListView):
         return results
 
     def get_context_data(self, **kwargs):
-        """"""
+        """Add list of parties and birth years to context to be referenced by
+        their dropdown menus."""
         context = super().get_context_data()
         context['party_list'] = get_party_list()
         context['dob_year_list'] = get_dob_year_list()
         return context
 
 class VoterDetailView(DetailView):
+    """Define a class which shows all the information associated with one
+    Voter."""
     model = Voter
     context_object_name = "v"
     template_name = "voter_analytics/voter_detail.html"
 
     def get_context_data(self, **kwargs):
-        """"""
+        """Add to context a Google Maps link to the page's Voter's address"""
         context = super().get_context_data()
         v = Voter.objects.get(pk=self.kwargs['pk'])
-        context['google_maps'] = "https://www.google.com/maps/place/" + str(v.addr_num) + "+" + v.addr_st + ",+Newton,+MA+" + str(v.addr_zip)
+        # Build Google Maps link
+        context['google_maps'] = "https://www.google.com/maps/place/" + \
+        str(v.addr_num) + "+" + v.addr_st + ",+Newton,+MA+" + str(v.addr_zip)
+        return context
+
+class GraphListView(ListView):
+    """Define a class which shows all the graphs associated with the data."""
+    model = Voter
+    context_object_name = "v"
+    template_name = "voter_analytics/graphs.html"
+
+    def get_context_data(self, **kwargs):
+        """Add graph divs to context data"""
+        # Get context
+        context = super().get_context_data(**kwargs)
+
+        # vvv PARTY AFFILIATION PIE CHART vvv
+        # Start with empty list
+        labels = []
+        # Add distinct parties to labels
+        for voter in Voter.objects.all():
+            if voter.party not in labels:
+                labels.append(voter.party)
+        # Initialize corresponding value list
+        values = [0] * len(labels)
+        # Build value list: count number of party members
+        i = 0
+        while i < len(labels):
+            values[i] = Voter.objects.filter(party=labels[i]).count()
+            i += 1
+
+        # Initialize pie chart data
+        fig = go.Pie(labels=labels, values=values)
+        title_text = "Prevalance of parties"
+
+        # Generate graph
+        graph_parties = plotly.offline.plot({"data":[fig], "layout_title_text":title_text}, auto_open=False, output_type="div")
+
+        # Add graph to context
+        context['graph_parties'] = graph_parties
+
         return context
 

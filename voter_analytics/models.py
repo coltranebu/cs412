@@ -30,7 +30,6 @@ class Voter(models.Model):
     The following field indicates how many of the past 5 elections the voter
     participated in:
     * voter_score
-
     """
 
     last_name = models.TextField()
@@ -52,16 +51,10 @@ class Voter(models.Model):
 
     voter_score = models.IntegerField()
 
-    def get_party_list(self):
-        """Get list of distinct parties in database"""
-        parties = []
-        for voter in Voter.objects.all():
-            if voter.party not in parties:
-                parties.append(voter.party)
-        return parties
-
 def load_data():
     """Create Voters from a hard-defined CSV."""
+    # Delete previous data
+    Voter.objects.all().delete()
     # Define filename
     filename = '/Users/coltrane/Documents/newton_voters.csv'
     # Open file
@@ -69,7 +62,6 @@ def load_data():
     # Discard headers
     f.readline()
     # Read each row:
-
     for line in f:
         try:
             # Split on commas

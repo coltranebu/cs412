@@ -1,0 +1,23 @@
+/*
+static/voter_analytics/style.css
+Coltrane Margosian. coltrane@bu.edu. 2026-11-01
+This file defines all of the styling present in Voter Analytics.
+*/
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: sans-serif;
+    padding: 0 5vw;
+}
+
+header {
+    background-color: lightblue;
+}
+
+h1 {
+    padding-top: 10px;
+}

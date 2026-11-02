@@ -1,0 +1,15 @@
+<!--
+voter_analytics/templates/voter_analytics/graphs.html
+Coltrane Margosian. coltrane@bu.edu 2026-11-01
+This page shows three different graphs pertaining to the data.
+-->
+
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+
+<h1>Graphs</h1>
+
+{{graph_parties|safe}}
+
+{% endblock %}

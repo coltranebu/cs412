@@ -9,34 +9,37 @@ This is the template displaying a list of voters.
 {% block content %}
 <div class="container">
 
+    <!-- Search -->
     <div class="row">
         {% include "voter_analytics/search.html" %}    
     </div>
 
-    <!-- navigation links for different pages of results -->
+    <!-- Page navigation; from example videos -->
     <div class="row">
         
         {% if is_paginated %}        
         <ul class="pagination">
             {% if page_obj.has_previous %}
                 <li>
-                    <span><a href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
-                
+                    <span><a href="?page={{ page_obj.previous_page_number }}">
+                        Previous</a></span>
                 </li>
             {% endif %}
                 <li class="">
-                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+                    <span>Page {{ page_obj.number }} of
+                        {{ page_obj.paginator.num_pages }}.</span>
                 </li>
             {% if page_obj.has_next %}
                 <li>
-                    <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
+                    <span><a href="?page={{ page_obj.next_page_number }}">
+                        Next</a></span>
                 </li>
             {% endif %}
             </ul>
         {% endif %}
     </div>
     
-	<!-- table of results -->
+	<!-- Show all results -->
     <div class="row">
         <table>
             <tr>
@@ -49,18 +52,23 @@ This is the template displaying a list of voters.
                 <th>Details</th>
             </tr>
     
+            <!-- Add row for every Voter -->
             {% for v in voters %}
             <tr>
                 <td>{{v.last_name}}</td>
                 <td>{{v.first_name}}</td>
+                <!-- If apt number, display it -->
                 {% if v.addr_apt %}
+                    <!-- Apartment number present -->
                     <td>{{v.addr_num}} {{v.addr_st}}, APT {{v.addr_apt}}</td>
                 {% else %}
+                    <!-- Apartment number not present -->
                     <td>{{v.addr_num}} {{v.addr_st}}</td>
                 {% endif %}
                 <td>{{v.dob}}</td>
                 <td>{{v.party}}</td>
                 <td>{{v.voter_score}}</td>
+                <!-- Link to details page of Voter -->
                 <td><a href="{% url 'voter_detail' v.pk %}">Details</a></td>
             </tr>
             {% endfor %}

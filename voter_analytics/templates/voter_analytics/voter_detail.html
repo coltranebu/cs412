@@ -8,7 +8,9 @@ This page shows the details of a given voter.
 
 {% block content %}
 
+<!-- Display name of Voter -->
 <h1>{{v.first_name}} {{v.last_name}}</h1>
+<!-- Display every other attribute -->
 <ul>
     <li>Residential Address - Street Number: {{v.addr_num}}</li>
     <li>Residential Address - Street Name: {{v.addr_st}}</li>
@@ -26,8 +28,9 @@ This page shows the details of a given voter.
     <li>v23town: {{v.v23town}}</li>
 
     <li>Voter Score: {{v.voter_score}}</li>
-
-    <a href="{{google_maps}}">See address on Google Maps</a>
 </ul>
+<br>
+<!-- Show Google Maps link to address -->
+<a href="{{google_maps}}">See address on Google Maps</a>
 
 {% endblock %}
