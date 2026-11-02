@@ -1,0 +1,33 @@
+<!--
+voter_analytics/templates/voter_analytics/voter_detail.html
+Coltrane Margosian. coltrane@bu.edu 2026-11-01
+This page shows the details of a given voter.
+-->
+
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+
+<h1>{{v.first_name}} {{v.last_name}}</h1>
+<ul>
+    <li>Residential Address - Street Number: {{v.addr_num}}</li>
+    <li>Residential Address - Street Name: {{v.addr_st}}</li>
+    <li>Residential Address - Apartment Number: {{v.addr_apt}}</li>
+    <li>Residential Address - Zip Code: {{v.addr_zip}}</li>
+    <li>Date of Birth: {{v.dob}}</li>
+    <li>Date of Registration: {{v.dor}}</li>
+    <li>Party Affiliation: {{v.party}}</li>
+    <li>Precinct Number: {{v.precinct}}</li>
+
+    <li>v20state: {{v.v20state}}</li>
+    <li>v21town: {{v.v21town}}</li>
+    <li>v21primary: {{v.v21primary}}</li>
+    <li>v22general: {{v.v22general}}</li>
+    <li>v23town: {{v.v23town}}</li>
+
+    <li>Voter Score: {{v.voter_score}}</li>
+
+    <a href="{{google_maps}}">See address on Google Maps</a>
+</ul>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+<!--
+voter_analytics/templates/voter_analytics/search.html
+Coltrane Margosian. coltrane@bu.edu 2026-11-01
+This is the template for the search function of the website.
+-->
+<h1>Search Form</h1>
+<p></p>
+ 
+<table>
+<form action="{% url 'voters_list' %}">
+ 
+    <tr>
+        <th>Party affiliation:</th>
+        <td>
+            <select name="party">
+                <option hidden disabled selected value>--</option>
+                {% for party in party_list %}
+                    <option value="{{party}}">{{party}}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <th>Minimum year of birth:</th>
+        <td>
+            <select name="min_year">
+                <option hidden disabled selected value>----</option>
+                {% for dob_year in dob_year_list %}
+                    <option value="{{dob_year}}">{{dob_year}}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <th>Maximum year of birth:</th>
+        <td>
+            <select name="max_year">
+                <option hidden disabled selected value>----</option>
+                {% for dob_year in dob_year_list %}
+                    <option value="{{dob_year}}">{{dob_year}}</option>
+                {% endfor %}
+            </select>
+        </td>
+        <th>Voter Score:</th>
+        <td>
+            <select name="voter_score">
+                <option hidden disabled selected value>-</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+        </td>
+        <th>Elections voted in:</th>
+        <td>
+            <br><input type="checkbox" id="v20state" name="v20state" value="v20state">
+            <label for="v20state">v20state</label>
+            <br><input type="checkbox" id="v21town" name="v21town" value="v21town">
+            <label for="v21town">v21town</label>
+            <br><input type="checkbox" id="v21primary" name="v21primary" value="v21primary">
+            <label for="v21primary">v21primary</label>
+            <br><input type="checkbox" id="v22general" name="v22general" value="v22general">
+            <label for="v22general">v22general</label>
+            <br><input type="checkbox" id="v23town" name="v23town" value="v23town">
+            <label for="v23town">v23town</label>
+        </td>
+    </tr>
+    
+    <tr>
+        <td><input type="submit"></td>
+        <td></td>
+    </tr>
+    
+</form>
+</table>

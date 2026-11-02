@@ -1,0 +1,73 @@
+<!--
+voter_analytics/templates/voter_analytics/voters.html
+Coltrane Margosian. coltrane@bu.edu 2026-11-01
+This is the template displaying a list of voters.
+-->
+
+{% extends 'voter_analytics/base.html' %}
+
+{% block content %}
+<div class="container">
+
+    <div class="row">
+        {% include "voter_analytics/search.html" %}    
+    </div>
+
+    <!-- navigation links for different pages of results -->
+    <div class="row">
+        
+        {% if is_paginated %}        
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li>
+                    <span><a href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
+                
+                </li>
+            {% endif %}
+                <li class="">
+                    <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+                </li>
+            {% if page_obj.has_next %}
+                <li>
+                    <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
+                </li>
+            {% endif %}
+            </ul>
+        {% endif %}
+    </div>
+    
+	<!-- table of results -->
+    <div class="row">
+        <table>
+            <tr>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Street Address</th>
+                <th>DOB</th>
+                <th>Party</th>
+                <th>Score</th>
+                <th>Details</th>
+            </tr>
+    
+            {% for v in voters %}
+            <tr>
+                <td>{{v.last_name}}</td>
+                <td>{{v.first_name}}</td>
+                {% if v.addr_apt %}
+                    <td>{{v.addr_num}} {{v.addr_st}}, APT {{v.addr_apt}}</td>
+                {% else %}
+                    <td>{{v.addr_num}} {{v.addr_st}}</td>
+                {% endif %}
+                <td>{{v.dob}}</td>
+                <td>{{v.party}}</td>
+                <td>{{v.voter_score}}</td>
+                <td><a href="{% url 'voter_detail' v.pk %}">Details</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+ 
+ 
+</div>
+
+{% endblock %}

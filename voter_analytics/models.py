@@ -52,6 +52,14 @@ class Voter(models.Model):
 
     voter_score = models.IntegerField()
 
+    def get_party_list(self):
+        """Get list of distinct parties in database"""
+        parties = []
+        for voter in Voter.objects.all():
+            if voter.party not in parties:
+                parties.append(voter.party)
+        return parties
+
 def load_data():
     """Create Voters from a hard-defined CSV."""
     # Define filename
