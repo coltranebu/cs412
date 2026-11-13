@@ -1,0 +1,18 @@
+<!--
+dadjokes/templates/dadjokes/picture.html
+Coltrane Margosian. coltrane@bu.edu. 2026-11-13
+This is template provides one Picture.
+-->
+
+{% extends 'dadjokes/base.html' %}
+{% load static %}
+
+    {% block content %}
+    
+    <img src={{picture.image_url}}>
+    <ul>
+        <li>Timestamp: {{picture.timestamp}}</li>
+    </ul>
+    
+    
+    {% endblock %}~

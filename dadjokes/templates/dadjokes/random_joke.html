@@ -1,0 +1,17 @@
+<!--
+dadjokes/templates/dadjokes/random_joke.html
+Coltrane Margosian. coltrane@bu.edu. 2026-11-13
+This is template provides a random joke and random picture.
+-->
+
+{% extends 'dadjokes/base.html' %}
+{% load static %}
+
+    {% block content %}
+    
+    <h1>Joke:</h1>
+    <p>{{joke.text}}</p>
+    <h1>Picture:</h1>
+    <img src={{picture.image_url}}>
+    
+    {% endblock %}~

@@ -1,0 +1,24 @@
+<!--
+dadjokes/templates/dadjokes/all_jokes.html
+Coltrane Margosian. coltrane@bu.edu. 2026-11-13
+This is template provides every Joke.
+-->
+
+{% extends 'dadjokes/base.html' %}
+{% load static %}
+
+    {% block content %}
+    
+    <h1>Every Joke:</h1>
+    <ol>
+        {% for joke in jokes %}
+        <li>{{joke.text}}</li>
+        <ul>
+            <li>Author: {{joke.name}}</li>
+            <li>Timestamp: {{joke.timestamp}}</li>
+        </ul>
+        {% endfor %}
+    </ol>
+    
+    
+    {% endblock %}~

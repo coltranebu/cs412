@@ -1,0 +1,23 @@
+<!--
+dadjokes/templates/dadjokes/all_jokes.html
+Coltrane Margosian. coltrane@bu.edu. 2026-11-13
+This is template provides every Piectur.
+-->
+
+{% extends 'dadjokes/base.html' %}
+{% load static %}
+
+    {% block content %}
+    
+    <h1>Every Picture:</h1>
+    <ol>
+        {% for picture in pictures %}
+        <li><img src={{picture.image_url}}></li>
+        <ul>
+            <li>Timestamp: {{picture.timestamp}}</li>
+        </ul>
+        {% endfor %}
+    </ol>
+    
+    
+    {% endblock %}~

@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     "mini_insta", # NEW, ASSIGN 3
     "marathon_analytics", # NEW, MODULE 7
     "voter_analytics", # NEW, ASSIGN 7
+    "rest_framework", # NEW, MODULE 9
+    "dadjokes", # NEW, ASSIGN 9
 ]
 
 MIDDLEWARE = [

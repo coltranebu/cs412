@@ -17,4 +17,8 @@ urlpatterns = [
     path('logout_confirm/', auth_views.LogoutView.as_view(), name="logout"),
     path('register/', UserRegistrationView.as_view(), name="register"),
 
+    ## API URL endpoints:
+    # This is what the app will connect to to get GET or POST data.
+    path(r'api/articles/', ArticleListAPIView.as_view(),),
+
 ]
