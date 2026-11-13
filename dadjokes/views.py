@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
+from rest_framework import generics
 from .models import Joke, Picture
+from .serializers import *
 
 import random
 
@@ -48,4 +50,39 @@ class PictureView(DetailView):
     template_name = "dadjokes/picture.html"
     model = Picture
     context_object_name = "picture"
-    
+
+class AllJokesAPIView(generics.ListCreateAPIView):
+    """Define an API view which lists or creates Jokes."""
+    queryset = Joke.objects.all()
+    serializer_class = JokeSerializer
+
+class JokeAPIView(generics.RetrieveAPIView):
+    """Define an API view which retrieves, updates, and/or destorys a Joke."""
+    queryset = Joke.objects.all()
+    serializer_class = JokeSerializer
+
+class AllPicturesAPIView(generics.ListAPIView):
+    """Define an API view which lists or creates Picture."""
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer
+
+class PictureAPIView(generics.RetrieveAPIView):
+    """Define an API view which gets, updates, and/or destorys a Picture."""
+    queryset = Picture.objects.all()
+    serializer_class = PictureSerializer
+
+class RandomJokeAPIView(generics.ListAPIView):
+    """Define an API view which RUD a random Joke."""
+    def get_queryset(self):
+        """Limits output to just one random Joke."""
+        rand_joke_pk = joke_pk_list[random.randint(0,len(joke_pk_list)-1)]
+        return Joke.objects.all().filter(pk=rand_joke_pk)
+    serializer_class = JokeSerializer
+
+class RandomPictureAPIView(generics.ListAPIView):
+    """Define an API view which RUD a random Picture."""
+    def get_queryset(self):
+        """Limits output to just one random Picture."""
+        rand_pic_pk = picture_pk_list[random.randint(0,len(picture_pk_list)-1)]
+        return Picture.objects.all().filter(pk=rand_pic_pk)
+    serializer_class = PictureSerializer

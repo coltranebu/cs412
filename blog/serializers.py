@@ -13,6 +13,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         # specify which fields we want to expose
         fields = ['id', 'title', 'author', 'text', 'published', 'image_file']
     
+    
     def create(self, validated_data):
         """Override the create method. Attach a FK User to a newly created
         article."""
