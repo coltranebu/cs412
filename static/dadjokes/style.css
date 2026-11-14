@@ -1,0 +1,14 @@
+/*
+static/dadjokes/style.css
+Coltrane Margosian. coltrane@bu.edu. 2026-11-13
+This is the stylesheet for the DadJokes website.
+All stylization is present in this document.
+*/
+
+p, h1, a, li {
+    font-family: sans-serif;
+}
+
+body {
+    background-color: #ddddff;
+}

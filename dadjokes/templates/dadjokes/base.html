@@ -10,6 +10,11 @@ This is the template for the base of the dadjokes website.
         <title>Dad Jokes</title>
         <link rel="stylesheet" href="{% static 'dadjokes/style.css' %}">
     </head>
+    <nav>
+        <a href="{% url 'home' %}">Random Joke</a>
+        <a href="{% url 'all_jokes' %}">All Jokes</a>
+        <a href="{% url 'all_pictures' %}">All Pictures</a>
+    </nav>
     <body>
         {% block content %}
         {% endblock %}

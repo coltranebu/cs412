@@ -11,7 +11,14 @@ This is template provides a random joke and random picture.
     
     <h1>Joke:</h1>
     <p>{{joke.text}}</p>
+    <ul>
+        <li>Author: {{joke.name}}</li>
+        <li>Timestamp: {{joke.timestamp}}</li>
+    </ul>
     <h1>Picture:</h1>
     <img src={{picture.image_url}}>
+    <ul>
+        <li>Timestamp: {{picture.timestamp}}</li>
+    </ul>
     
     {% endblock %}~
