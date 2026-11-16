@@ -12,6 +12,8 @@ from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+from rest_framework import generics
+from .serializers import *
 
 # Create your views here.
 
@@ -497,3 +499,56 @@ class DeleteLikeView(MyLoginRequiredMixin, DeleteView):
         # Return form
         response = super().form_valid(form)
         return response
+
+class ProfileDetailAPIView(generics.RetrieveAPIView):
+    """Define an API view which returns the details of any one profile."""
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class ProfileListAPIView(generics.ListAPIView):
+    """Define an API view which returns all profiles."""
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+
+class PostDetailAPIView(generics.RetrieveAPIView):
+    """Define an API view which returns the details of any one post."""
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class PostListAPIView(generics.ListAPIView):
+    """Define an API view which returns all posts."""
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class ProfilePostsAPIView(generics.ListAPIView):
+    """Define an API view which returns all posts by a given profile."""
+    def get_queryset(self):
+        """Limit output to Posts corresponding to a given Profile."""
+        return Post.objects.filter(profile=self.kwargs['pk'])
+    serializer_class = PostSerializer
+
+class ProfilePhotosAPIView(generics.ListAPIView):
+    """Define an API view which returns all photos by a given profile."""
+    def get_queryset(self):
+        """Limit output to Photos corresponding to a given Profile."""
+        posts = Post.objects.filter(profile=self.kwargs['pk'])
+        return Photo.objects.filter(post__in=posts)
+    serializer_class = PhotoSerializer
+
+class ProfileFeedAPIView(generics.ListAPIView):
+    """Define an API view which returns the feed of a given profile."""
+    def get_queryset(self):
+        """Limit output to Posts by Profiles followed by a given Profile."""
+        followed = Profile.objects.get(pk=self.kwargs['pk']).get_following()
+        return Post.objects.filter(profile__in=followed)
+    serializer_class = PostSerializer
+
+class PostCreateAPIView(generics.CreateAPIView):
+    """Define an API view allowing for the creation of a Post."""
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+
+class PhotoCreateAPIView(generics.CreateAPIView):
+    """Define an API view allowing for the creation of a Photo."""
+    queryset = Photo.objects.all()
+    serializer_class = PhotoSerializer
