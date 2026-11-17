@@ -41,4 +41,5 @@ urlpatterns = [
 
     path(r'api/profile/<int:pk>/get_num_followers', NumFollowersAPIView.as_view()),
     path(r'api/profile/<int:pk>/get_num_following', NumFollowingAPIView.as_view()),
+    path(r'api/post/<int:pk>/photos', PhotosByPostAPIView.as_view()),
 ]

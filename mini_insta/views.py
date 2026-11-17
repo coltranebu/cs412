@@ -566,3 +566,10 @@ class NumFollowingAPIView(APIView):
     def get(self, request, format=None, **kwargs):
         """Return number of profiles follower by the given Profile."""
         return Response(Profile.objects.get(pk=self.kwargs['pk']).get_num_following())
+    
+class PhotosByPostAPIView(generics.ListAPIView):
+    """Define an API view which returns all Photos of a given Post."""
+    def get_queryset(self):
+        """Limit output to Photos by a given Post."""
+        return Photo.objects.filter(post=self.kwargs['pk'])
+    serializer_class = PhotoSerializer
