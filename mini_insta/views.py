@@ -13,6 +13,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework.response import Response
 from .serializers import *
 
 # Create your views here.
@@ -552,3 +554,15 @@ class PhotoCreateAPIView(generics.CreateAPIView):
     """Define an API view allowing for the creation of a Photo."""
     queryset = Photo.objects.all()
     serializer_class = PhotoSerializer
+
+class NumFollowersAPIView(APIView):
+    """Define an API view returning number of followers of a given Profile."""
+    def get(self, request, format=None, **kwargs):
+        """Return number of followers."""
+        return Response(Profile.objects.get(pk=self.kwargs['pk']).get_num_followers())
+
+class NumFollowingAPIView(APIView):
+    """Define an API view returning number of Profiles followed by one given."""
+    def get(self, request, format=None, **kwargs):
+        """Return number of profiles follower by the given Profile."""
+        return Response(Profile.objects.get(pk=self.kwargs['pk']).get_num_following())
