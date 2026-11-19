@@ -138,6 +138,15 @@ class Photo(models.Model):
         else:
             return self.image_file.url
 
+    def get_image_url_http(self):
+        """Return the URL to a Photo's image.
+        If image_file, complete URL."""
+        # If there is a URL, return it. Otherwise, return file.
+        if self.image_url:
+            return self.image_url
+        else:
+            return "https://cs-webapps.bu.edu" + self.image_file.url
+
 class Follow(models.Model):
     """Define a relation that associates two profiles; one following other"""
     # profile: person being followed; follower_profile: person following
