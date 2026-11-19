@@ -26,7 +26,7 @@ class PostSerializer(serializers.ModelSerializer):
         image_urls = []
         photos = Photo.objects.filter(post=object.pk)
         for photo in photos:
-            image_urls.append(photo.get_image_url())
+            image_urls.append(photo.get_image_url_http())
         return image_urls
         
 
