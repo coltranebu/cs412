@@ -18,10 +18,11 @@ class PostSerializer(serializers.ModelSerializer):
     photos = serializers.SerializerMethodField()
     likes = serializers.SerializerMethodField()
     comments = serializers.SerializerMethodField()
+    profile_display_name = serializers.SerializerMethodField()
     class Meta:
         """Define the metadata for PostSerializer."""
         model = Post
-        fields = ['id', 'timestamp', 'caption', 'profile', 'photos', 'likes', 'comments']
+        fields = ['id', 'timestamp', 'caption', 'profile', 'photos', 'likes', 'comments', 'profile_display_name']
     
     def get_photos(self, object):
         """Retrieve all Photos associated with a Post."""
@@ -40,7 +41,9 @@ class PostSerializer(serializers.ModelSerializer):
         print(object.get_all_comments_api())
         return object.get_all_comments_api()
 
-        
+    def get_profile_display_name(self, object):
+        """Get the display name of the Post's author."""
+        return Profile.objects.get(pk=object.profile).display_name
 
 class PhotoSerializer(serializers.ModelSerializer):
     """Define a serializer for the Photo model."""
