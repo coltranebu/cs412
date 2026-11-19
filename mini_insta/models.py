@@ -112,6 +112,18 @@ class Post(models.Model):
         # get this information 
         return len(self.get_likes()) - 1
 
+    def get_all_comments_api(self):
+        """Return every Comment associated with a Post and return for API."""
+        comment_list = []
+        comments = Comment.objects.filter(post=self)
+        for comment in comments:
+            comment_list_entry = []
+            comment_list_entry.append(Profile.objects.get(pk=comment.profile.pk).display_name)
+            comment_list_entry.append(str(comment.timestamp))
+            comment_list_entry.append(comment.text)
+            comment_list.append(comment_list_entry)
+        return comment_list
+
 class Photo(models.Model):
     """Define a photo class associated with a Post contains a timestamp and
     either a WWW URL to an image or a URL to an uploaded image."""
