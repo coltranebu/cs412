@@ -15,10 +15,20 @@ class ProfileSerializer(serializers.ModelSerializer):
 
 class PostSerializer(serializers.ModelSerializer):
     """Define a serializer for the Post model."""
+    photos = serializers.SerializerMethodField()
     class Meta:
         """Define the metadata for PostSerializer."""
         model = Post
-        fields = '__all__'
+        fields = ['id', 'timestamp', 'caption', 'profile', 'photos']
+    
+    def get_photos(self, object):
+        """Retrieve all Photos associated with a Post."""
+        image_urls = []
+        photos = Photo.objects.filter(post=object.pk)
+        for photo in photos:
+            image_urls.append(photo.get_image_url())
+        return image_urls
+        
 
 class PhotoSerializer(serializers.ModelSerializer):
     """Define a serializer for the Photo model."""
