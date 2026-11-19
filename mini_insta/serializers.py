@@ -43,7 +43,7 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_profile_display_name(self, object):
         """Get the display name of the Post's author."""
-        return Profile.objects.get(pk=object.profile).display_name
+        return profile.display_name
 
 class PhotoSerializer(serializers.ModelSerializer):
     """Define a serializer for the Photo model."""
