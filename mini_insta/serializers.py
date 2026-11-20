@@ -4,6 +4,7 @@
 # models to a text representation suitable to transmit over HTTP.
 
 from rest_framework import serializers
+from django.contrib.auth.models import User
 from .models import *
 
 class ProfileSerializer(serializers.ModelSerializer):
@@ -72,3 +73,11 @@ class LikeSerializer(serializers.ModelSerializer):
         """Define the metadata for LikeSerializer."""
         model = Like
         fields = '__all__'
+
+class UserSerializer(serializers.ModelSerializer):
+    """Define a serializer for the User model."""
+    password = serializers.CharField(write_only=True)
+    class Meta:
+        """Define the metadeta for UserSerializer."""
+        model = User
+        fields = ['username', 'password', 'email']

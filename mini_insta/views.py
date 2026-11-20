@@ -11,10 +11,12 @@ from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth import login
-from rest_framework import generics
+from django.contrib.auth import login, authenticate
+from rest_framework import generics, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny
 from .serializers import *
 
 # Create your views here.
@@ -573,3 +575,24 @@ class PhotosByPostAPIView(generics.ListAPIView):
         """Limit output to Photos by a given Post."""
         return Photo.objects.filter(post=self.kwargs['pk'])
     serializer_class = PhotoSerializer
+
+class LoginAPIView(APIView):
+    """Define an API view which allows a user to log in."""
+    # Nobody has a token yet, so open this view up
+    authentication_classes = []
+    permission_classes = [AllowAny]
+    def post(self, request):
+        user = authenticate(
+            request,
+            username=request.data.get('username'),
+            password=request.data.get('password'),
+        )
+        if user:
+            token, created = Token.objects.get_or_create(user=user)
+            profile = Profile.objects.get(user=user)
+            return Response({
+                'token': token.key,
+                'user': {'id': user.id, 'username': user.username},
+                'profile': ProfileSerializer(profile).data,
+            })
+        return Response({'error': 'Invalid credentials'}, status=401)
