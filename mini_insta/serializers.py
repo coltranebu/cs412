@@ -80,4 +80,4 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         """Define the metadeta for UserSerializer."""
         model = User
-        fields = ['username', 'password', 'email']
+        fields = ['username', 'password']
